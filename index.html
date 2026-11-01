@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>Prek‑C｜森林探险家打卡</title>
+<title>Prek‑C｜森林探险家打卡 | Forest Explorer Check‑in</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:"PingFang SC",system-ui,-apple-system;
   touch-action: manipulation;
@@ -43,7 +43,7 @@ body{
   transition: transform 0.4s ease-in-out;
   backface-visibility:hidden;
   padding:12px;
-  overflow-y:auto; /* ✅ 修复：长页面可以上下滑动 */
+  overflow-y:auto;
   -webkit-overflow-scrolling: touch;
 }
 .page-next{
@@ -86,6 +86,7 @@ h1{font-size:20px;margin-bottom:6px;color:#375739;text-align:center}
   cursor:pointer;
   background:#f8fbf4;
   font-size:14px;
+  line-height:1.4;
 }
 .child-item.active{background:#cce8cf;border-color:#548c57}
 .box-view{background:#fff8e8;border-radius:12px;padding:14px;margin:12px 0}
@@ -99,7 +100,7 @@ h1{font-size:20px;margin-bottom:6px;color:#375739;text-align:center}
 }
 .draw-anim{text-align:center;padding:16px;font-size:16px}
 .back-btn{background:#888}
-.record-item{border-bottom:1px solid #eee;padding:10px 0;font-size:14px}
+.record-item{border-bottom:1px solid #eee;padding:10px 0;font-size:14px;line-height:1.5}
 textarea{
   width:100%;
   border:1px solid #ccc;
@@ -226,7 +227,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 .cover-title{
   font-size:30px;
   font-weight:800;
-  line-height:1.15;
+  line-height:1.2;
   margin-bottom:10px;
   text-shadow:0 4px 14px rgba(0,0,0,0.25);
 }
@@ -240,12 +241,14 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
   font-size:15px;
   opacity:0.95;
   margin-bottom:18px;
+  line-height:1.5;
 }
 .cover-hint{
   display:flex;
   justify-content:center;
   gap:10px;
   margin-bottom:18px;
+  flex-wrap:wrap;
 }
 .cover-hint b{
   background:rgba(255,255,255,0.2);
@@ -289,6 +292,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
   padding:4px 0;
   font-size:14px;
 }
+.en-small{font-size:12px;opacity:0.8;display:block;}
 </style>
 </head>
 <body>
@@ -301,81 +305,81 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
           <div class="cover-card">
             <div class="cover-forest"></div>
             <div class="cover-content">
-              <div class="cover-logo">🌲 Prek‑C · 森林探险家</div>
-              <div class="cover-title">亲子运动<br><span>探险打卡</span></div>
-              <div class="cover-slogan">走进森林，快乐动起来，收集属于我们的自然宝藏</div>
+              <div class="cover-logo">🌲 Prek‑C · 森林探险家 <span class="en-small">Forest Explorer</span></div>
+              <div class="cover-title">亲子运动<br><span>探险打卡</span><span class="en-small">Family Sports · Adventure Check‑in</span></div>
+              <div class="cover-slogan">走进森林，快乐动起来，收集属于我们的自然宝藏<br><span class="en-small">Step into forest, move happily & collect nature treasures</span></div>
               <div class="cover-hint">
-                <b>📸 拍照记录</b>
-                <b>🎥 视频记录</b>
-                <b>🗺️ 宝藏地图</b>
+                <b>📸 拍照记录 Photo</b>
+                <b>🎥 视频记录 Video</b>
+                <b>🗺️ 宝藏地图 Treasure Map</b>
               </div>
               <div class="cover-buttons">
-                <button class="cover-btn" id="btnParent">👨‍👩‍👧‍👦 我是家长</button>
-                <button class="cover-btn teacher" id="btnTeacher">👩‍🏫 我是老师</button>
+                <button class="cover-btn" id="btnParent">👨‍👩‍👧‍👦 我是家长 <span class="en-small">I'm a Parent</span></button>
+                <button class="cover-btn teacher" id="btnTeacher">👩‍🏫 我是老师 <span class="en-small">I'm a Teacher</span></button>
               </div>
             </div>
-            <div class="cover-footer">选择身份，开始今日探险</div>
+            <div class="cover-footer">选择身份，开始今日探险｜Select role to start adventure</div>
           </div>
         </div>
       </div>
 
       <!--P1 选择小朋友页-->
       <div id="page1" class="page-wrap page-next">
-        <h1>🌲 Prek‑C 森林探险家</h1>
-        <div class="sub">身份：<span id="showIdentity"></span>｜选择小探险家</div>
+        <h1>🌲 Prek‑C 森林探险家 <span class="en-small">Forest Explorer</span></h1>
+        <div class="sub">身份：<span id="showIdentity"></span>｜选择小探险家 <span class="en-small">Select little explorer</span></div>
         <div class="card" id="teacherStatCard">
-          <h3>📊今日打卡统计</h3>
+          <h3>📊今日打卡统计 <span class="en-small">Today Check‑in Stats</span></h3>
           <div id="statText"></div>
           <div id="statList"></div>
         </div>
         <div class="card">
-          <div>请选择小探险家：</div>
+          <div>请选择小探险家：<span class="en-small">Please select kid</span></div>
           <div class="grid" id="childListDom"></div>
         </div>
         <div class="card">
-          <div>📦 班级收藏宝盒总览</div>
+          <div>📦 班级收藏宝盒总览 <span class="en-small">Class Treasure Box Overview</span></div>
           <div id="boxBrief"></div>
-          <button class="btn" id="goBoxBtn">查看完整宝盒</button>
+          <button class="btn" id="goBoxBtn">查看完整宝盒 <span class="en-small">View full box</span></button>
         </div>
-        <button class="btn back-btn" id="back0Btn">← 返回选择身份</button>
+        <button class="btn back-btn" id="back0Btn">← 返回选择身份 <span class="en-small">Back to role</span></button>
       </div>
 
       <!--P2 功能选择页（打卡 / 藏宝记录）-->
       <div id="page2" class="page-wrap page-next">
-        <h1>✨探险菜单</h1>
+        <h1>✨探险菜单 <span class="en-small">Adventure Menu</span></h1>
         <div class="sub">小探险家：<span id="currChildName2"></span></div>
         <div class="card">
-          <button class="btn" id="goTaskBtn">🏃 今日运动打卡</button>
-          <button class="btn" id="goRecordBtn">🗺️ 查看藏宝记录</button>
+          <button class="btn" id="goTaskBtn">🏃 今日运动打卡 <span class="en-small">Today Sports Check‑in</span></button>
+          <button class="btn" id="goRecordBtn">🗺️ 查看藏宝记录 <span class="en-small">View treasure records</span></button>
         </div>
-        <button class="btn back-btn" id="back1Btn">← 返回选择小朋友</button>
+        <button class="btn back-btn" id="back1Btn">← 返回选择小朋友 <span class="en-small">Back to kid select</span></button>
       </div>
 
       <!--P3 打卡填写页-->
       <div id="page3" class="page-wrap page-next">
-        <h1>🌲探险打卡</h1>
+        <h1>🌲探险打卡 <span class="en-small">Adventure Check‑in</span></h1>
         <div class="sub">小探险家：<span id="currChildName"></span>｜身份：<span id="currIdentityText"></span></div>
         <div class="card" id="parentSuggestCard">
-          <h3>💡今日亲子运动</h3>
+          <h3>💡今日亲子运动 <span class="en-small">Today Parent‑Kid Activity</span></h3>
           <p id="suggestText"></p>
         </div>
         <div class="card">
-          <h4>📝打卡记录</h4>
-          <p>文字记录：</p>
-          <textarea id="noteInput" placeholder="写下本次活动的小故事、感受……"></textarea>
-          <p>📷媒体记录（可选：拍照 / 录视频 / 相册选取）</p>
-          <div class="tip-text">建议短视频15秒以内，过大视频会存储失败</div>
+          <h4>📝打卡记录 <span class="en-small">Check‑in Note</span></h4>
+          <p>文字记录：<span class="en-small">Text note</span></p>
+          <textarea id="noteInput" placeholder="写下本次活动的小故事、感受……Write your story & feelings…"></textarea>
+          <p>📷媒体记录（可选：拍照 / 录视频 / 相册选取）<span class="en-small">Media(optional): photo/video/gallery</span></p>
+          <div class="tip-text">建议短视频15秒以内，过大视频会存储失败｜Suggest video within 15s, big video may fail to save</div>
           <input type="file" id="fileInput" accept="image/*,video/*" capture="camera">
           <div id="mediaPreviewWrap"></div>
-          <button class="btn" id="doCheckInBtn">✅提交打卡，抽取自然宝藏</button>
+          <button class="btn" id="doCheckInBtn">✅提交打卡，抽取自然宝藏 <span class="en-small">Submit & Draw treasure</span></button>
         </div>
-        <button class="btn back-btn" id="back2Btn">← 返回探险菜单</button>
+        <button class="btn back-btn" id="back2Btn">← 返回探险菜单 <span class="en-small">Back to menu</span></button>
       </div>
 
       <!--P4 翻牌抽宝藏-->
       <div id="page4" class="page-wrap page-next">
         <div class="draw-anim card">
-          <h2>🎉探险打卡成功！</h2>
+          <h2>🎉探险打卡成功！<span class="en-small">Check‑in Success!</span></h2>
           <div class="flip-wrap">
             <div class="flip-card" id="flipCard">
               <div class="flip-front">❓</div>
@@ -384,40 +388,40 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
           </div>
           <div id="resultText" style="margin-top:8px;font-size:14px;display:none">
             你抽到：<span id="drawItemName" style="font-weight:bold"></span>
-            <div style="margin-top:6px">这件宝藏已存入你的个人藏宝图 & 班级收藏宝盒</div>
+            <div style="margin-top:6px">这件宝藏已存入你的个人藏宝图 & 班级收藏宝盒<br><span class="en-small">Saved to personal & class treasure box</span></div>
           </div>
-          <button class="btn" id="drawDoneBtn" style="display:none">继续探险</button>
+          <button class="btn" id="drawDoneBtn" style="display:none">继续探险 <span class="en-small">Continue adventure</span></button>
         </div>
       </div>
 
       <!--P5 班级宝盒-->
       <div id="page5" class="page-wrap page-next">
-        <h1>📦 Prek‑C 班级收藏宝盒</h1>
+        <h1>📦 Prek‑C 班级收藏宝盒 <span class="en-small">Class Treasure Box</span></h1>
         <div class="box-view">
-          <div>宝盒阶段：<span id="boxStage"></span></div>
-          <div>班级总打卡次数：<span id="totalCheck"></span></div>
-          <div>收集自然物总件数：<span id="totalItem"></span></div>
-          <div style="margin-top:10px">已收集宝藏：</div>
+          <div>宝盒阶段：<span id="boxStage"></span> <span class="en-small" id="boxStageEn"></span></div>
+          <div>班级总打卡次数：<span id="totalCheck"></span> <span class="en-small">Total class check‑ins</span></div>
+          <div>收集自然物总件数：<span id="totalItem"></span> <span class="en-small">Total treasures collected</span></div>
+          <div style="margin-top:10px">已收集宝藏：<span class="en-small">Collected treasures</span></div>
           <div id="itemListDom"></div>
         </div>
-        <button class="btn back-btn" id="backFromBoxBtn">← 返回上一页</button>
+        <button class="btn back-btn" id="backFromBoxBtn">← 返回上一页 <span class="en-small">Back</span></button>
       </div>
 
       <!--P6 个人藏宝图-->
       <div id="page6" class="page-wrap page-next">
-        <h1>📜个人探险藏宝图</h1>
+        <h1>📜个人探险藏宝图 <span class="en-small">Personal Treasure Map</span></h1>
         <div class="sub">小探险家：<span id="recordChildName"></span></div>
         <div class="card">
-          <div>个人打卡总次数：<span id="personCheckCount">0</span></div>
+          <div>个人打卡总次数：<span id="personCheckCount">0</span> <span class="en-small">Personal total check‑ins</span></div>
           <div class="treasure-map" id="treasureMapWrap">
-            <div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图</div>
+            <div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图 <span class="en-small">My treasure map</span></div>
           </div>
         </div>
         <div class="card">
-          <h4>打卡历史明细（文字、照片、视频）</h4>
+          <h4>打卡历史明细（文字、照片、视频）<span class="en-small">Check‑in history(text/photo/video)</span></h4>
           <div id="recordListDom"></div>
         </div>
-        <button class="btn back-btn" id="backFromRecordBtn">← 返回探险菜单</button>
+        <button class="btn back-btn" id="backFromRecordBtn">← 返回探险菜单 <span class="en-small">Back to menu</span></button>
       </div>
 
     </div>
@@ -425,57 +429,85 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 </div>
 
 <script>
+// 孩子名单：中文名+英文名
 const childList = [
-  {id:1,name:"何心熠"},{id:2,name:"曾麦甜"},{id:3,name:"邹清越"},{id:4,name:"胡未晞"},
-  {id:5,name:"周烨可"},{id:6,name:"刘泽言"},{id:7,name:"程恺麟"},{id:8,name:"林欧文"},
-  {id:9,name:"戴心一"},{id:10,name:"陈家庆"},{id:11,name:"罗韵知"},{id:12,name:"方译骁"},
-  {id:13,name:"叶悠宜"},{id:14,name:"季琛凡"},{id:15,name:"林慕勒"},{id:16,name:"程千与"},
-  {id:17,name:"林知言"},{id:18,name:"周安迪"},{id:19,name:"戴宸惜"},{id:20,name:"高灏"},
-  {id:21,name:"高潜声"},{id:22,name:"卢垵诺"},{id:23,name:"翁崇耀"},{id:24,name:"杜圣均"}
+  {id:1,name:"何心熠",en:"Brainy"},
+  {id:2,name:"曾麦甜",en:"Maya"},
+  {id:3,name:"邹清越",en:"Alita"},
+  {id:4,name:"胡未晞",en:"Olivia"},
+  {id:5,name:"周烨可",en:"Yvette"},
+  {id:6,name:"刘泽言",en:"Evan"},
+  {id:7,name:"程恺麟",en:"Kolya"},
+  {id:8,name:"林欧文",en:"Overman"},
+  {id:9,name:"戴心一",en:"Stawberry"},
+  {id:10,name:"陈家庆",en:"Justin"},
+  {id:11,name:"罗韵知",en:"Melody"},
+  {id:12,name:"方译骁",en:"Felix"},
+  {id:13,name:"叶悠宜",en:"Evelyn"},
+  {id:14,name:"季琛凡",en:"Ehan"},
+  {id:15,name:"林慕勒",en:"Chocolate"},
+  {id:16,name:"程千与",en:"Emmie"},
+  {id:17,name:"林知言",en:"Jane"},
+  {id:18,name:"周安迪",en:"Andy"},
+  {id:19,name:"戴宸惜",en:"Molly"},
+  {id:20,name:"高灏",en:"Rico"},
+  {id:21,name:"高潜声",en:"Grayson"},
+  {id:22,name:"卢垵诺",en:"Annora"},
+  {id:23,name:"翁崇耀",en:"Dylan"},
+  {id:24,name:"杜圣均",en:"Jasper"}
 ];
 
 const itemPool = [
-  {key:"flower",name:"小花",icon:"🌸"},
-  {key:"pinecone",name:"松果",icon:"🌰"},
-  {key:"leaf",name:"树叶",icon:"🍂"},
-  {key:"grass",name:"小草",icon:"🌿"}
+  {key:"flower",name:"小花",en:"Flower",icon:"🌸"},
+  {key:"pinecone",name:"松果",en:"Pinecone",icon:"🌰"},
+  {key:"leaf",name:"树叶",en:"Leaf",icon:"🍂"},
+  {key:"grass",name:"小草",en:"Grass",icon:"🌿"}
 ];
 
+// 中英双语运动建议
 const parentSuggestList = [
-  "（运动小建议：小兔跳一跳：亲子原地模仿小兔跳跃10次，跳完一起击掌庆祝。）",
-  "（运动小建议：松鼠爬树：孩子当小松鼠，家长用双手搭成树干，沿“树干”慢慢攀爬。）",
-  "（运动小建议：森林平衡木：在地面画一条线，亲子模仿森林探险者走平衡线。）",
-  "（运动小建议：青蛙荷叶跳：地面放几张纸当荷叶，亲子跳过“荷叶”不落水。）",
-  "（运动小建议：小熊慢走：弯腰屈膝模仿小熊走路，绕房间慢慢走一圈。）",
-  "（运动小建议：小鹿快跑：亲子在安全空间里模仿小鹿轻快奔跑，家长喊停就定格。）",
-  "（运动小建议：大树伸展：孩子模仿树干，家长模仿树枝，一起做向上伸展。）",
-  "（运动小建议：蜗牛慢爬：亲子蹲下或趴下，像蜗牛一样慢慢向前移动。）",
-  "（运动小建议：老鹰抓小鸡：家长当老鹰，孩子当小鸡，灵活躲闪保护自己。）",
-  "（运动小建议：袋鼠跳跳乐：双手放胸前模仿袋鼠，原地连续小跳15次。）",
-  "（运动小建议：森林障碍走：设置靠垫障碍，亲子绕障碍、跨障碍完成探险路线。）",
-  "（运动小建议：鱼儿游游：双臂张开模仿鱼鳍，在房间里轻轻游动。）",
-  "（运动小建议：螃蟹横走：蹲下横着走，像小螃蟹一样穿过森林小路。）",
-  "（运动小建议：蝴蝶飞飞：双臂做翅膀，轻轻飞起落下，配合深呼吸。）",
-  "（运动小建议：啄木鸟点地：单脚站立，另一只脚轻点地面，模仿啄木鸟啄树。）",
-  "（运动小建议：森林抱抱：家长张开双臂，孩子跑过来完成一次大大的森林抱抱。）",
-  "（运动小建议：毛毛虫扭扭：蹲下抱膝，像毛毛虫一样扭动身体前进。）",
-  "（运动小建议：小马驾驾：模仿小马小跑，膝盖抬高，家长喊“驾”就加速。）",
-  "（运动小建议：蘑菇圈圈跳：原地画圆，亲子跳进跳出，模仿蘑菇圈圈游戏。）",
-  "（运动小建议：森林拉伸操：一起做上肢、下肢和腰部拉伸，放松身体。）",
-  "（运动小建议：小猴荡秋千：家长轻扶孩子双手，模仿小猴荡秋千轻轻摆动。）",
-  "（运动小建议：企鹅走走：双手贴身体两侧，模仿企鹅摇摇摆摆走一圈。）",
-  "（运动小建议：寻宝折返跑：家长指定终点，孩子跑到终点取回一件“森林宝物”。）",
-  "（运动小建议：森林击鼓传花：听音乐走动，音乐停时摆出一个森林动物姿势。）",
-  "（运动小建议：小鱼吐泡泡：原地慢跑配合呼气，想象吐出彩色泡泡。）",
-  "（运动小建议：青蛙蹲一蹲：亲子一起做青蛙蹲，边蹲边说“呱、呱、呱”。）",
-  "（运动小建议：树叶飘飘：原地转圈，双臂像树叶一样轻轻飘落。）",
-  "（运动小建议：松果传递：用膝盖夹住软垫或小球，从起点传到终点。）",
-  "（运动小建议：森林闯关：设计“跳、走、跨、爬”4个小关卡，一起完成。）",
-  "（运动小建议：探险总结会：回顾30天运动，孩子说一说最喜欢的森林游戏。）"
+  {zh:"（运动小建议：小兔跳一跳：亲子原地模仿小兔跳跃10次，跳完一起击掌庆祝。）",en:"(Activity:Squirrel jump:Jump like little rabbit 10 times, high‑five afterwards.)"},
+  {zh:"（运动小建议：松鼠爬树：孩子当小松鼠，家长用双手搭成树干，沿“树干”慢慢攀爬。）",en:"(Activity:Squirrel climb:Kid acts as squirrel, use hands as tree trunk for climbing.)"},
+  {zh:"（运动小建议：森林平衡木：在地面画一条线，亲子模仿森林探险者走平衡线。）",en:"(Activity:Forest balance beam:Walk along a line on floor like explorer.)"},
+  {zh:"（运动小建议：青蛙荷叶跳：地面放几张纸当荷叶，亲子跳过“荷叶”不落水。）",en:"(Activity:Frog jump:Use paper as lotus leaf,jump over without falling.)"},
+  {zh:"（运动小建议：小熊慢走：弯腰屈膝模仿小熊走路，绕房间慢慢走一圈。）",en:"(Activity:Bear walk:Bend knees,walk slowly like bear around room.)"},
+  {zh:"（运动小建议：小鹿快跑：亲子在安全空间里模仿小鹿轻快奔跑，家长喊停就定格。）",en:"(Activity:Deer run:Run lightly like deer,freeze when parent says stop.)"},
+  {zh:"（运动小建议：大树伸展：孩子模仿树干，家长模仿树枝，一起做向上伸展。）",en:"(Activity:Big tree stretch:Kid as trunk,parent as branch,stretch upward together.)"},
+  {zh:"（运动小建议：蜗牛慢爬：亲子蹲下或趴下，像蜗牛一样慢慢向前移动。）",en:"(Activity:Snail crawl:Crouch or crawl forward slowly like snail.)"},
+  {zh:"（运动小建议：老鹰抓小鸡：家长当老鹰，孩子当小鸡，灵活躲闪保护自己。）",en:"(Activity:Hawk & chicken:Parent as hawk,kid as chicken,dodge flexibly.)"},
+  {zh:"（运动小建议：袋鼠跳跳乐：双手放胸前模仿袋鼠，原地连续小跳15次。）",en:"(Activity:Kangaroo jump:Hands on chest,jump in place 15 times.)"},
+  {zh:"（运动小建议：森林障碍走：设置靠垫障碍，亲子绕障碍、跨障碍完成探险路线。）",en:"(Activity:Forest obstacle walk:Use cushions as obstacles,walk & step over.)"},
+  {zh:"（运动小建议：鱼儿游游：双臂张开模仿鱼鳍，在房间里轻轻游动。）",en:"(Activity:Fish swim:Open arms as fins,swim gently around room.)"},
+  {zh:"（运动小建议：螃蟹横走：蹲下横着走，像小螃蟹一样穿过森林小路。）",en:"(Activity:Crab walk:Squat and walk sideways like little crab.)"},
+  {zh:"（运动小建议：蝴蝶飞飞：双臂做翅膀，轻轻飞起落下，配合深呼吸。）",en:"(Activity:Butterfly fly:Arms as wings,fly up & down with deep breath.)"},
+  {zh:"（运动小建议：啄木鸟点地：单脚站立，另一只脚轻点地面，模仿啄木鸟啄树。）",en:"(Activity:Woodpecker tap:Stand on one foot,tap ground with other foot.)"},
+  {zh:"（运动小建议：森林抱抱：家长张开双臂，孩子跑过来完成一次大大的森林抱抱。）",en:"(Activity:Forest hug:Open arms,kid run for a big warm hug.)"},
+  {zh:"（运动小建议：毛毛虫扭扭：蹲下抱膝，像毛毛虫一样扭动身体前进。）",en:"(Activity:Caterpillar wiggle:Squat & hug knees,wiggle forward like caterpillar.)"},
+  {zh:"（运动小建议：小马驾驾：模仿小马小跑，膝盖抬高，家长喊“驾”就加速。）",en:"(Activity:Pony trot:Trot with knees high,speed up when parent says giddy‑up.)"},
+  {zh:"（运动小建议：蘑菇圈圈跳：原地画圆，亲子跳进跳出，模仿蘑菇圈圈游戏。）",en:"(Activity:Mushroom circle jump:Jump in & out of circle on floor.)"},
+  {zh:"（运动小建议：森林拉伸操：一起做上肢、下肢和腰部拉伸，放松身体。）",en:"(Activity:Forest stretch:Stretch arms,legs & waist to relax body.)"},
+  {zh:"（运动小建议：小猴荡秋千：家长轻扶孩子双手，模仿小猴荡秋千轻轻摆动。）",en:"(Activity:Monkey swing:Hold kid’s hands gently,swing like little monkey.)"},
+  {zh:"（运动小建议：企鹅走走：双手贴身体两侧，模仿企鹅摇摇摆摆走一圈。）",en:"(Activity:Penguin walk:Hands beside body,waddle like penguin one round.)"},
+  {zh:"（运动小建议：寻宝折返跑：家长指定终点，孩子跑到终点取回一件“森林宝物”。）",en:"(Activity:Treasure run:Kid run to target and bring back one “forest treasure”.)"},
+  {zh:"（运动小建议：森林击鼓传花：听音乐走动，音乐停时摆出一个森林动物姿势。）",en:"(Activity:Forest pass game:Walk with music,strike forest‑animal pose on stop.)"},
+  {zh:"（运动小建议：小鱼吐泡泡：原地慢跑配合呼气，想象吐出彩色泡泡。）",en:"(Activity:Fish bubble:Jog in place & exhale,imagine blowing colorful bubbles.)"},
+  {zh:"（运动小建议：青蛙蹲一蹲：亲子一起做青蛙蹲，边蹲边说“呱、呱、呱”。）",en:"(Activity:Frog squat:Squat like frog together,say ribbit‑ribbit.)"},
+  {zh:"（运动小建议：树叶飘飘：原地转圈，双臂像树叶一样轻轻飘落。）",en:"(Activity:Falling leaf:Spin in place,arms fall gently like falling leaf.)"},
+  {zh:"（运动小建议：松果传递：用膝盖夹住软垫或小球，从起点传到终点。）",en:"(Activity:Pinecone pass:Hold cushion/ball between knees,pass from start to end.)"},
+  {zh:"（运动小建议：森林闯关：设计“跳、走、跨、爬”4个小关卡，一起完成。）",en:"(Activity:Forest challenge:Complete 4 stations:jump,walk,step‑over,crawl.)"},
+  {zh:"（运动小建议：探险总结会：回顾30天运动，孩子说一说最喜欢的森林游戏。）",en:"(Activity:Adventure review:Review 30‑day sports,kid talk about favorite forest game.)"}
+];
+
+//宝盒阶段中英
+const boxStageMap = [
+  {zh:"空盒启程",en:"Empty Box"},
+  {zh:"初遇宝藏",en:"First Treasures"},
+  {zh:"森林收获",en:"Forest Harvest"},
+  {zh:"宝藏满满",en:"Treasure Full"}
 ];
 
 const STORAGE_KEY = "prekc_forest_box_v6";
-let isDrawing = false; // ✅ 防重复提交锁
+let isDrawing = false;
 
 function initBox(){
   let raw = localStorage.getItem(STORAGE_KEY);
@@ -483,19 +515,24 @@ function initBox(){
   return {totalCheckIns:0,collected:{flower:0,pinecone:0,leaf:0,grass:0},records:[]};
 }
 function saveBox(box){localStorage.setItem(STORAGE_KEY,JSON.stringify(box));}
+
 function getBoxStage(total){
-  if(total<=2) return "空盒启程";
-  if(total<=7) return "初遇宝藏";
-  if(total<=14) return "森林收获";
-  return "宝藏满满";
+  let idx;
+  if(total<=2) idx=0;
+  else if(total<=7) idx=1;
+  else if(total<=14) idx=2;
+  else idx=3;
+  return boxStageMap[idx];
 }
+
 function randomDraw(){
   return itemPool[Math.floor(Math.random()*itemPool.length)];
 }
 function getTodaySuggestion(){
   const day = new Date().getDate();
   const index = (day - 1) % parentSuggestList.length;
-  return parentSuggestList[index];
+  const obj = parentSuggestList[index];
+  return obj.zh + "<br><span class='en-small'>"+obj.en+"</span>";
 }
 function getTodayStr(){
   const d = new Date();
@@ -526,12 +563,12 @@ function renderTeacherStat(){
       uniqueChild.push(r);
     }
   })
-  document.getElementById("statText").innerText = `今日已打卡：${uniqueChild.length} / ${childList.length}人`
+  document.getElementById("statText").innerText = `今日已打卡 Checked‑in：${uniqueChild.length} / ${childList.length}人`
   let listHtml = ""
   uniqueChild.forEach(r=>{
-    listHtml += `<div class="stat-item">✅ ${r.childName}</div>`
+    listHtml += `<div class="stat-item">✅ ${r.childName}(${r.childEn})</div>`
   })
-  if(uniqueChild.length === 0) listHtml = `<div style="color:#777">暂无打卡</div>`
+  if(uniqueChild.length === 0) listHtml = `<div style="color:#777">暂无打卡｜No check‑ins yet</div>`
   document.getElementById("statList").innerHTML = listHtml
 }
 
@@ -571,8 +608,6 @@ const fileInput = document.getElementById("fileInput");
 const mediaPreviewWrap = document.getElementById("mediaPreviewWrap");
 const doCheckInBtn = document.getElementById("doCheckInBtn");
 const teacherStatCard = document.getElementById("teacherStatCard");
-const statText = document.getElementById("statText");
-const statList = document.getElementById("statList");
 
 const flipCard = document.getElementById("flipCard");
 const drawIcon = document.getElementById("drawIcon");
@@ -584,6 +619,7 @@ const goBoxBtn = document.getElementById("goBoxBtn");
 const boxBrief = document.getElementById("boxBrief");
 const backFromBoxBtn = document.getElementById("backFromBoxBtn");
 const boxStageDom = document.getElementById("boxStage");
+const boxStageEnDom = document.getElementById("boxStageEn");
 const totalCheckDom = document.getElementById("totalCheck");
 const totalItemDom = document.getElementById("totalItem");
 const itemListDom = document.getElementById("itemListDom");
@@ -620,13 +656,14 @@ function renderChildList(){
   childList.forEach(c=>{
     let div = document.createElement("div");
     div.className = "child-item";
-    div.innerText = c.name;
+    div.innerHTML = `${c.name}<span class="en-small">${c.en}</span>`;
     div.dataset.id = c.id;
+    div.dataset.en = c.en;
     div.onclick = ()=>{
       document.querySelectorAll(".child-item").forEach(d=>d.classList.remove("active"));
       div.classList.add("active");
       selectedChild = c;
-      currChildName2.innerText = c.name;
+      currChildName2.innerText = `${c.name}(${c.en})`;
       goPage(page2);
     };
     childListDom.appendChild(div);
@@ -635,12 +672,15 @@ function renderChildList(){
 function renderBoxBrief(){
   let box = initBox();
   let sum = Object.values(box.collected).reduce((a,b)=>a+b,0);
-  boxBrief.innerHTML = `<div>阶段：${getBoxStage(sum)}</div><div>总打卡：${box.totalCheckIns}｜宝藏总数：${sum}</div>`;
+  const st = getBoxStage(sum);
+  boxBrief.innerHTML = `<div>阶段 Stage：${st.zh}｜${st.en}</div><div>总打卡 Total：${box.totalCheckIns}｜宝藏总数 Total treasures：${sum}</div>`;
 }
 function renderBoxPage(){
   let box = initBox();
   let sumItem = Object.values(box.collected).reduce((a,b)=>a+b,0);
-  boxStageDom.innerText = getBoxStage(sumItem);
+  const st = getBoxStage(sumItem);
+  boxStageDom.innerText = st.zh;
+  boxStageEnDom.innerText = st.en;
   totalCheckDom.innerText = box.totalCheckIns;
   totalItemDom.innerText = sumItem;
   itemListDom.innerHTML = "";
@@ -648,15 +688,15 @@ function renderBoxPage(){
     let cnt = box.collected[it.key]||0;
     let tag = document.createElement("span");
     tag.className = "item-tag";
-    tag.innerText = `${it.icon} ${it.name} ×${cnt}`;
+    tag.innerText = `${it.icon} ${it.name}(${it.en}) ×${cnt}`;
     itemListDom.appendChild(tag);
   });
 }
 function renderTreasureMap(personCollect){
-  let html = `<div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图</div>`;
+  let html = `<div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图 <span class="en-small">My treasure map</span></div>`;
   itemPool.forEach(it=>{
     let num = personCollect[it.key]||0;
-    html += `<div class="treasure-line"><div class="treasure-label">${it.icon} ${it.name}：${num}个</div><div class="treasure-grid">`;
+    html += `<div class="treasure-line"><div class="treasure-label">${it.icon} ${it.name}(${it.en})：${num}个</div><div class="treasure-grid">`;
     for(let i=0;i<12;i++){
       html += i < num
         ? `<div class="treasure-cell active">${it.icon}</div>`
@@ -669,20 +709,20 @@ function renderTreasureMap(personCollect){
 function renderPersonRecord(child){
   const box = initBox();
   const myRecords = box.records.filter(r=>r.childId === child.id);
-  recordChildName.innerText = child.name;
+  recordChildName.innerText = `${child.name}(${child.en})`;
   personCheckCount.innerText = myRecords.length;
   let personCollect = {flower:0,pinecone:0,leaf:0,grass:0};
   myRecords.forEach(r=>{personCollect[r.item]+=1;});
   renderTreasureMap(personCollect);
   recordListDom.innerHTML = "";
   if(myRecords.length === 0){
-    recordListDom.innerHTML = "<div style='color:#777'>暂无打卡记录，快去完成打卡收集宝藏吧！</div>";
+    recordListDom.innerHTML = "<div style='color:#777'>暂无打卡，快去完成打卡收集宝藏吧！｜No records yet, go check‑in for treasures!</div>";
   }else{
     myRecords.slice().reverse().forEach(r=>{
       const findItem = itemPool.find(p=>p.key === r.item);
       let div = document.createElement("div");
       div.className = "record-item";
-      let htmlText = `<div>${r.time}｜身份：${r.identity==='parent'?'家长':'老师'}｜获得 ${findItem.icon}${findItem.name}</div>`;
+      let htmlText = `<div>${r.time}｜身份 Role：${r.identity==='parent'?'家长Parent':'老师Teacher'}｜获得 Got ${findItem.icon}${findItem.name}(${findItem.en})</div>`;
       if(r.note) htmlText += `<div style="margin:4px 0;color:#333">📝${r.note}</div>`;
       if(r.media && r.mediaType === "image") htmlText += `<img class="img-preview" src="${r.media}">`;
       if(r.media && r.mediaType === "video") htmlText += `<video class="img-preview" controls src="${r.media}"></video>`;
@@ -701,13 +741,13 @@ function resetTaskForm(){
 
 btnParent.onclick = function(){
   currentIdentity = "parent";
-  showIdentity.innerText = "👨‍👩‍👧‍👦家长";
+  showIdentity.innerText = "👨‍👩‍👧‍👦家长 Parent";
   teacherStatCard.classList.add("hide");
   goPage(page1);
 };
 btnTeacher.onclick = function(){
   currentIdentity = "teacher";
-  showIdentity.innerText = "👩‍🏫老师";
+  showIdentity.innerText = "👩‍🏫老师 Teacher";
   teacherStatCard.classList.remove("hide");
   renderTeacherStat();
   goPage(page1);
@@ -728,11 +768,11 @@ back2Btn.onclick = ()=>{
 };
 goTaskBtn.onclick = function(){
   if(!selectedChild) return;
-  currChildName.innerText = selectedChild.name;
-  currIdentityText.innerText = currentIdentity==="parent"?"家长":"老师";
+  currChildName.innerText = `${selectedChild.name}(${selectedChild.en})`;
+  currIdentityText.innerText = currentIdentity==="parent"?"家长 Parent":"老师 Teacher";
   if(currentIdentity === "parent"){
     parentSuggestCard.classList.remove("hide");
-    suggestText.innerText = getTodaySuggestion();
+    suggestText.innerHTML = getTodaySuggestion();
   }else{
     parentSuggestCard.classList.add("hide");
   }
@@ -745,7 +785,7 @@ goRecordBtn.onclick = function(){
   goPage(page6);
 };
 doCheckInBtn.onclick = function(){
-  if(isDrawing) return; // ✅ 防止重复点击提交
+  if(isDrawing) return;
   if(!selectedChild || !currentIdentity) return;
   isDrawing = true;
   let box = initBox();
@@ -755,6 +795,7 @@ doCheckInBtn.onclick = function(){
   box.records.push({
     childId:selectedChild.id,
     childName:selectedChild.name,
+    childEn:selectedChild.en,
     item:drawRes.key,
     identity:currentIdentity,
     note:noteInput.value.trim(),
@@ -769,7 +810,7 @@ doCheckInBtn.onclick = function(){
   resultText.style.display="none";
   drawDoneBtn.style.display="none";
   drawIcon.innerText = drawRes.icon;
-  drawItemName.innerText = drawRes.name;
+  drawItemName.innerText = `${drawRes.name}(${drawRes.en})`;
   goPage(page4);
 
   setTimeout(()=>{
@@ -777,7 +818,7 @@ doCheckInBtn.onclick = function(){
     setTimeout(()=>{
       resultText.style.display="block";
       drawDoneBtn.style.display="block";
-      isDrawing = false; // ✅ 解锁
+      isDrawing = false;
     },400);
   },2000);
 };
