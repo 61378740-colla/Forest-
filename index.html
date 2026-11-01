@@ -175,6 +175,25 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
   transform: rotateY(180deg);
 }
 
+/* 语音播放按钮 */
+.audio-btn{
+  display:inline-block;
+  border:none;
+  background:#62a866;
+  color:white;
+  border-radius:8px;
+  padding:4px 8px;
+  font-size:14px;
+  margin-left:8px;
+  cursor:pointer;
+}
+.audio-btn:active{background:#4e8c52}
+.cn-sent{
+  color:#666;
+  font-size:14px;
+  margin-top:4px;
+}
+
 /* 身份封面 */
 .cover{
   width:100%;
@@ -302,24 +321,22 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
       <!--P0 身份封面页-->
       <div id="page0" class="page-wrap page-active">
         <div class="cover">
-          <div class="cover-card">
-            <div class="cover-forest"></div>
-            <div class="cover-content">
-              <div class="cover-logo">🌲 Prek‑C · 森林探险家 <span class="en-small">Forest Explorer</span></div>
-              <div class="cover-title">亲子运动<br><span>探险打卡</span><span class="en-small">Family Sports · Adventure Check‑in</span></div>
-              <div class="cover-slogan">走进森林，快乐动起来，收集属于我们的自然宝藏<br><span class="en-small">Step into forest, move happily & collect nature treasures</span></div>
-              <div class="cover-hint">
-                <b>📸 拍照记录 Photo</b>
-                <b>🎥 视频记录 Video</b>
-                <b>🗺️ 宝藏地图 Treasure Map</b>
-              </div>
-              <div class="cover-buttons">
-                <button class="cover-btn" id="btnParent">👨‍👩‍👧‍👦 我是家长 <span class="en-small">I'm a Parent</span></button>
-                <button class="cover-btn teacher" id="btnTeacher">👩‍🏫 我是老师 <span class="en-small">I'm a Teacher</span></button>
-              </div>
+          <div class="cover-forest"></div>
+          <div class="cover-content">
+            <div class="cover-logo">🌲 Prek‑C · 森林探险家 <span class="en-small">Forest Explorer</span></div>
+            <div class="cover-title">亲子运动<br><span>探险打卡</span><span class="en-small">Family Sports · Adventure Check‑in</span></div>
+            <div class="cover-slogan">走进森林，快乐动起来，收集属于我们的自然宝藏<br><span class="en-small">Step into forest, move happily & collect nature treasures</span></div>
+            <div class="cover-hint">
+              <b>📸 拍照记录 Photo</b>
+              <b>🎥 视频记录 Video</b>
+              <b>🗺️ 宝藏地图 Treasure Map</b>
             </div>
-            <div class="cover-footer">选择身份，开始今日探险｜Select role to start adventure</div>
+            <div class="cover-buttons">
+              <button class="cover-btn" id="btnParent">👨‍👩‍👧‍👦 我是家长 <span class="en-small">I'm a Parent</span></button>
+              <button class="cover-btn teacher" id="btnTeacher">👩‍🏫 我是老师 <span class="en-small">I'm a Teacher</span></button>
+            </div>
           </div>
+          <div class="cover-footer">选择身份，开始今日探险｜Select role to start adventure</div>
         </div>
       </div>
 
@@ -355,18 +372,28 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="back1Btn">← 返回选择小朋友 <span class="en-small">Back to kid select</span></button>
       </div>
 
-      <!--P3 打卡填写页-->
+      <!--P3 打卡填写页【英文+中文释义+连续朗读】-->
       <div id="page3" class="page-wrap page-next">
         <h1>🌲探险打卡 <span class="en-small">Adventure Check‑in</span></h1>
         <div class="sub">小探险家：<span id="currChildName"></span>｜身份：<span id="currIdentityText"></span></div>
         <div class="card" id="parentSuggestCard">
           <h3>💡今日亲子运动 <span class="en-small">Today Parent‑Kid Activity</span></h3>
           <p id="suggestText"></p>
+          <div style="margin-top:14px;border-top:1px dashed #b8d2ba;padding-top:12px;">
+            <h3>📢今日英文打卡句 <span class="en-small">English Sentence</span>
+              <button class="audio-btn" id="playEngBtn">🎧 播放</button>
+            </h3>
+            <p id="engSentText"></p>
+            <p class="cn-sent" id="cnSentText"></p>
+            <div class="tip-text">🎥打卡小提示：拍摄运动视频，请宝贝读出上面这句英文哦！</div>
+          </div>
         </div>
         <div class="card">
           <h4>📝打卡记录 <span class="en-small">Check‑in Note</span></h4>
           <p>文字记录：<span class="en-small">Text note</span></p>
           <textarea id="noteInput" placeholder="写下本次活动的小故事、感受……Write your story & feelings…"></textarea>
+          <p>🗣️英文打卡记录（必填）：<span class="en-small">English check‑in (Required)</span></p>
+          <textarea id="engCheckInput" placeholder="宝贝朗读英文句子，可备注：已朗读 / 视频里朗读完成"></textarea>
           <p>📷媒体记录（可选：拍照 / 录视频 / 相册选取）<span class="en-small">Media(optional): photo/video/gallery</span></p>
           <div class="tip-text">建议短视频15秒以内，过大视频会存储失败｜Suggest video within 15s, big video may fail to save</div>
           <input type="file" id="fileInput" accept="image/*,video/*" capture="camera">
@@ -407,7 +434,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="backFromBoxBtn">← 返回上一页 <span class="en-small">Back</span></button>
       </div>
 
-      <!--P6 个人藏宝图-->
+      <!--P6 个人藏宝图（老师可以看到英文打卡）-->
       <div id="page6" class="page-wrap page-next">
         <h1>📜个人探险藏宝图 <span class="en-small">Personal Treasure Map</span></h1>
         <div class="sub">小探险家：<span id="recordChildName"></span></div>
@@ -418,7 +445,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
           </div>
         </div>
         <div class="card">
-          <h4>打卡历史明细（文字、照片、视频）<span class="en-small">Check‑in history(text/photo/video)</span></h4>
+          <h4>打卡历史明细（文字、照片、视频、英文打卡）<span class="en-small">Check‑in history</span></h4>
           <div id="recordListDom"></div>
         </div>
         <button class="btn back-btn" id="backFromRecordBtn">← 返回探险菜单 <span class="en-small">Back to menu</span></button>
@@ -429,7 +456,28 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 </div>
 
 <script>
-// 孩子名单：中文名+英文名
+// 语音：英文朗读，停顿，再中文释义
+function speakEngCn(eng, cn) {
+  if (!('speechSynthesis' in window)) {
+    alert("你的浏览器不支持语音朗读");
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterEng = new SpeechSynthesisUtterance(eng);
+  utterEng.lang = 'en-US';
+  utterEng.rate = 0.75;
+  utterEng.onend = () => {
+    setTimeout(()=>{
+      const utterCn = new SpeechSynthesisUtterance(cn);
+      utterCn.lang = 'zh-CN';
+      utterCn.rate = 0.85;
+      speechSynthesis.speak(utterCn);
+    },1200)
+  }
+  speechSynthesis.speak(utterEng);
+}
+
+// 孩子名单【已修正英文名：Strawberry】
 const childList = [
   {id:1,name:"何心熠",en:"Brainy"},
   {id:2,name:"曾麦甜",en:"Maya"},
@@ -439,7 +487,7 @@ const childList = [
   {id:6,name:"刘泽言",en:"Evan"},
   {id:7,name:"程恺麟",en:"Kolya"},
   {id:8,name:"林欧文",en:"Overman"},
-  {id:9,name:"戴心一",en:"Stawberry"},
+  {id:9,name:"戴心一",en:"Strawberry"},
   {id:10,name:"陈家庆",en:"Justin"},
   {id:11,name:"罗韵知",en:"Melody"},
   {id:12,name:"方译骁",en:"Felix"},
@@ -457,6 +505,7 @@ const childList = [
   {id:24,name:"杜圣均",en:"Jasper"}
 ];
 
+// 宝藏池
 const itemPool = [
   {key:"flower",name:"小花",en:"Flower",icon:"🌸"},
   {key:"pinecone",name:"松果",en:"Pinecone",icon:"🌰"},
@@ -464,377 +513,293 @@ const itemPool = [
   {key:"grass",name:"小草",en:"Grass",icon:"🌿"}
 ];
 
-// 中英双语运动建议
-const parentSuggestList = [
-  {zh:"（运动小建议：小兔跳一跳：亲子原地模仿小兔跳跃10次，跳完一起击掌庆祝。）",en:"(Activity:Squirrel jump:Jump like little rabbit 10 times, high‑five afterwards.)"},
-  {zh:"（运动小建议：松鼠爬树：孩子当小松鼠，家长用双手搭成树干，沿“树干”慢慢攀爬。）",en:"(Activity:Squirrel climb:Kid acts as squirrel, use hands as tree trunk for climbing.)"},
-  {zh:"（运动小建议：森林平衡木：在地面画一条线，亲子模仿森林探险者走平衡线。）",en:"(Activity:Forest balance beam:Walk along a line on floor like explorer.)"},
-  {zh:"（运动小建议：青蛙荷叶跳：地面放几张纸当荷叶，亲子跳过“荷叶”不落水。）",en:"(Activity:Frog jump:Use paper as lotus leaf,jump over without falling.)"},
-  {zh:"（运动小建议：小熊慢走：弯腰屈膝模仿小熊走路，绕房间慢慢走一圈。）",en:"(Activity:Bear walk:Bend knees,walk slowly like bear around room.)"},
-  {zh:"（运动小建议：小鹿快跑：亲子在安全空间里模仿小鹿轻快奔跑，家长喊停就定格。）",en:"(Activity:Deer run:Run lightly like deer,freeze when parent says stop.)"},
-  {zh:"（运动小建议：大树伸展：孩子模仿树干，家长模仿树枝，一起做向上伸展。）",en:"(Activity:Big tree stretch:Kid as trunk,parent as branch,stretch upward together.)"},
-  {zh:"（运动小建议：蜗牛慢爬：亲子蹲下或趴下，像蜗牛一样慢慢向前移动。）",en:"(Activity:Snail crawl:Crouch or crawl forward slowly like snail.)"},
-  {zh:"（运动小建议：老鹰抓小鸡：家长当老鹰，孩子当小鸡，灵活躲闪保护自己。）",en:"(Activity:Hawk & chicken:Parent as hawk,kid as chicken,dodge flexibly.)"},
-  {zh:"（运动小建议：袋鼠跳跳乐：双手放胸前模仿袋鼠，原地连续小跳15次。）",en:"(Activity:Kangaroo jump:Hands on chest,jump in place 15 times.)"},
-  {zh:"（运动小建议：森林障碍走：设置靠垫障碍，亲子绕障碍、跨障碍完成探险路线。）",en:"(Activity:Forest obstacle walk:Use cushions as obstacles,walk & step over.)"},
-  {zh:"（运动小建议：鱼儿游游：双臂张开模仿鱼鳍，在房间里轻轻游动。）",en:"(Activity:Fish swim:Open arms as fins,swim gently around room.)"},
-  {zh:"（运动小建议：螃蟹横走：蹲下横着走，像小螃蟹一样穿过森林小路。）",en:"(Activity:Crab walk:Squat and walk sideways like little crab.)"},
-  {zh:"（运动小建议：蝴蝶飞飞：双臂做翅膀，轻轻飞起落下，配合深呼吸。）",en:"(Activity:Butterfly fly:Arms as wings,fly up & down with deep breath.)"},
-  {zh:"（运动小建议：啄木鸟点地：单脚站立，另一只脚轻点地面，模仿啄木鸟啄树。）",en:"(Activity:Woodpecker tap:Stand on one foot,tap ground with other foot.)"},
-  {zh:"（运动小建议：森林抱抱：家长张开双臂，孩子跑过来完成一次大大的森林抱抱。）",en:"(Activity:Forest hug:Open arms,kid run for a big warm hug.)"},
-  {zh:"（运动小建议：毛毛虫扭扭：蹲下抱膝，像毛毛虫一样扭动身体前进。）",en:"(Activity:Caterpillar wiggle:Squat & hug knees,wiggle forward like caterpillar.)"},
-  {zh:"（运动小建议：小马驾驾：模仿小马小跑，膝盖抬高，家长喊“驾”就加速。）",en:"(Activity:Pony trot:Trot with knees high,speed up when parent says giddy‑up.)"},
-  {zh:"（运动小建议：蘑菇圈圈跳：原地画圆，亲子跳进跳出，模仿蘑菇圈圈游戏。）",en:"(Activity:Mushroom circle jump:Jump in & out of circle on floor.)"},
-  {zh:"（运动小建议：森林拉伸操：一起做上肢、下肢和腰部拉伸，放松身体。）",en:"(Activity:Forest stretch:Stretch arms,legs & waist to relax body.)"},
-  {zh:"（运动小建议：小猴荡秋千：家长轻扶孩子双手，模仿小猴荡秋千轻轻摆动。）",en:"(Activity:Monkey swing:Hold kid’s hands gently,swing like little monkey.)"},
-  {zh:"（运动小建议：企鹅走走：双手贴身体两侧，模仿企鹅摇摇摆摆走一圈。）",en:"(Activity:Penguin walk:Hands beside body,waddle like penguin one round.)"},
-  {zh:"（运动小建议：寻宝折返跑：家长指定终点，孩子跑到终点取回一件“森林宝物”。）",en:"(Activity:Treasure run:Kid run to target and bring back one “forest treasure”.)"},
-  {zh:"（运动小建议：森林击鼓传花：听音乐走动，音乐停时摆出一个森林动物姿势。）",en:"(Activity:Forest pass game:Walk with music,strike forest‑animal pose on stop.)"},
-  {zh:"（运动小建议：小鱼吐泡泡：原地慢跑配合呼气，想象吐出彩色泡泡。）",en:"(Activity:Fish bubble:Jog in place & exhale,imagine blowing colorful bubbles.)"},
-  {zh:"（运动小建议：青蛙蹲一蹲：亲子一起做青蛙蹲，边蹲边说“呱、呱、呱”。）",en:"(Activity:Frog squat:Squat like frog together,say ribbit‑ribbit.)"},
-  {zh:"（运动小建议：树叶飘飘：原地转圈，双臂像树叶一样轻轻飘落。）",en:"(Activity:Falling leaf:Spin in place,arms fall gently like falling leaf.)"},
-  {zh:"（运动小建议：松果传递：用膝盖夹住软垫或小球，从起点传到终点。）",en:"(Activity:Pinecone pass:Hold cushion/ball between knees,pass from start to end.)"},
-  {zh:"（运动小建议：森林闯关：设计“跳、走、跨、爬”4个小关卡，一起完成。）",en:"(Activity:Forest challenge:Complete 4 stations:jump,walk,step‑over,crawl.)"},
-  {zh:"（运动小建议：探险总结会：回顾30天运动，孩子说一说最喜欢的森林游戏。）",en:"(Activity:Adventure review:Review 30‑day sports,kid talk about favorite forest game.)"}
+// 双语句子池
+const sentencePool = [
+  {eng:"I like to run.",cn:"我喜欢跑。"},
+  {eng:"I can jump.",cn:"我会跳。"},
+  {eng:"I see a tree.",cn:"我看见一棵树。"},
+  {eng:"I love nature.",cn:"我爱大自然。"}
+];
+// 运动建议池
+const suggestPool = [
+  "（运动小建议：和宝贝一起原地跳一跳）",
+  "（运动小建议：亲子接力小跑）",
+  "（运动小建议：平衡木小游戏）",
+  "（运动小建议：投掷小球）"
 ];
 
-//宝盒阶段中英
-const boxStageMap = [
-  {zh:"空盒启程",en:"Empty Box"},
-  {zh:"初遇宝藏",en:"First Treasures"},
-  {zh:"森林收获",en:"Forest Harvest"},
-  {zh:"宝藏满满",en:"Treasure Full"}
-];
+let currentPage = 0;
+let identity = "";
+let selectedChildId = null;
+let todaySent = {};
+let todaySuggest = "";
+let mediaFile = null;
+let mediaPreviewUrl = "";
 
-const STORAGE_KEY = "prekc_forest_box_v6";
-let isDrawing = false;
-
-function initBox(){
-  let raw = localStorage.getItem(STORAGE_KEY);
+// 本地存储key
+const STORAGE_KEY = "forestExplorerCheckin";
+function loadData(){
+  const raw = localStorage.getItem(STORAGE_KEY);
   if(raw) return JSON.parse(raw);
-  return {totalCheckIns:0,collected:{flower:0,pinecone:0,leaf:0,grass:0},records:[]};
+  return {records:[],treasureMap:{}};
 }
-function saveBox(box){localStorage.setItem(STORAGE_KEY,JSON.stringify(box));}
+function saveData(data){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+let appData = loadData();
 
-function getBoxStage(total){
-  let idx;
-  if(total<=2) idx=0;
-  else if(total<=7) idx=1;
-  else if(total<=14) idx=2;
-  else idx=3;
-  return boxStageMap[idx];
-}
-
-function randomDraw(){
-  return itemPool[Math.floor(Math.random()*itemPool.length)];
-}
-function getTodaySuggestion(){
-  const day = new Date().getDate();
-  const index = (day - 1) % parentSuggestList.length;
-  const obj = parentSuggestList[index];
-  return obj.zh + "<br><span class='en-small'>"+obj.en+"</span>";
-}
-function getTodayStr(){
-  const d = new Date();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  return `${d.getFullYear()}/${m}/${dd}`
-}
-function formatTime(){
-  const d = new Date();
-  const m = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  const h = String(d.getHours()).padStart(2,'0');
-  const mi = String(d.getMinutes()).padStart(2,'0');
-  const s = String(d.getSeconds()).padStart(2,'0');
-  return `${d.getFullYear()}/${m}/${dd} ${h}:${mi}:${s}`
-}
-function renderTeacherStat(){
-  const box = initBox();
-  const todayStr = getTodayStr();
-  const todayRecords = box.records.filter(r=>{
-    return r.time.startsWith(todayStr)
-  })
-  const uniqueChild = [];
-  const seenId = new Set();
-  todayRecords.forEach(r=>{
-    if(!seenId.has(r.childId)){
-      seenId.add(r.childId);
-      uniqueChild.push(r);
-    }
-  })
-  document.getElementById("statText").innerText = `今日已打卡 Checked‑in：${uniqueChild.length} / ${childList.length}人`
-  let listHtml = ""
-  uniqueChild.forEach(r=>{
-    listHtml += `<div class="stat-item">✅ ${r.childName}(${r.childEn})</div>`
-  })
-  if(uniqueChild.length === 0) listHtml = `<div style="color:#777">暂无打卡｜No check‑ins yet</div>`
-  document.getElementById("statList").innerHTML = listHtml
-}
-
-const page0 = document.getElementById("page0");
-const page1 = document.getElementById("page1");
-const page2 = document.getElementById("page2");
-const page3 = document.getElementById("page3");
-const page4 = document.getElementById("page4");
-const page5 = document.getElementById("page5");
-const page6 = document.getElementById("page6");
-const allPages = [page0,page1,page2,page3,page4,page5,page6];
-
-function goPage(target){
-  allPages.forEach(p=>{
+// 页面切换
+function showPage(pageIndex){
+  const pages = document.querySelectorAll(".page-wrap");
+  pages.forEach(p=>{
     p.classList.remove("page-active","page-next","page-prev");
-    p.classList.add("page-next");
   })
-  target.classList.add("page-active");
+  if(pageIndex>currentPage){
+    pages[pageIndex].classList.add("page-next");
+  }else if(pageIndex<currentPage){
+    pages[pageIndex].classList.add("page-prev");
+  }
+  setTimeout(()=>{
+    pages[pageIndex].classList.remove("page-next","page-prev");
+    pages[pageIndex].classList.add("page-active");
+  },10)
+  currentPage = pageIndex;
 }
 
-const btnParent = document.getElementById("btnParent");
-const btnTeacher = document.getElementById("btnTeacher");
-const showIdentity = document.getElementById("showIdentity");
-const back0Btn = document.getElementById("back0Btn");
-const back1Btn = document.getElementById("back1Btn");
-const back2Btn = document.getElementById("back2Btn");
-const childListDom = document.getElementById("childListDom");
-const currChildName2 = document.getElementById("currChildName2");
-const goTaskBtn = document.getElementById("goTaskBtn");
-const goRecordBtn = document.getElementById("goRecordBtn");
-const currChildName = document.getElementById("currChildName");
-const currIdentityText = document.getElementById("currIdentityText");
-const parentSuggestCard = document.getElementById("parentSuggestCard");
-const suggestText = document.getElementById("suggestText");
-const noteInput = document.getElementById("noteInput");
-const fileInput = document.getElementById("fileInput");
-const mediaPreviewWrap = document.getElementById("mediaPreviewWrap");
-const doCheckInBtn = document.getElementById("doCheckInBtn");
-const teacherStatCard = document.getElementById("teacherStatCard");
+// 渲染小朋友列表
+function renderChildList(){
+  const dom = document.getElementById("childListDom");
+  dom.innerHTML = "";
+  childList.forEach(kid=>{
+    const div = document.createElement("div");
+    div.className = "child-item";
+    div.innerText = kid.name;
+    div.onclick = ()=>{
+      selectedChildId = kid.id;
+      document.querySelectorAll(".child-item").forEach(i=>i.classList.remove("active"));
+      div.classList.add("active");
+      document.getElementById("currChildName2").innerText = kid.name;
+      showPage(2);
+    }
+    dom.appendChild(div);
+  })
+}
 
-const flipCard = document.getElementById("flipCard");
-const drawIcon = document.getElementById("drawIcon");
-const drawItemName = document.getElementById("drawItemName");
-const resultText = document.getElementById("resultText");
-const drawDoneBtn = document.getElementById("drawDoneBtn");
+// 统计今日打卡
+function renderStat(){
+  const today = new Date().toLocaleDateString();
+  const todayRec = appData.records.filter(r=>r.dateStr===today);
+  document.getElementById("statText").innerText = `今日打卡：${todayRec.length} 人`;
+  const listDom = document.getElementById("statList");
+  listDom.innerHTML = "";
+  todayRec.forEach(r=>{
+    const kid = childList.find(c=>c.id === r.childId);
+    const div = document.createElement("div");
+    div.className = "stat-item";
+    div.innerText = kid ? kid.name : "未知";
+    listDom.appendChild(div);
+  })
+}
 
-const goBoxBtn = document.getElementById("goBoxBtn");
-const boxBrief = document.getElementById("boxBrief");
-const backFromBoxBtn = document.getElementById("backFromBoxBtn");
-const boxStageDom = document.getElementById("boxStage");
-const boxStageEnDom = document.getElementById("boxStageEn");
-const totalCheckDom = document.getElementById("totalCheck");
-const totalItemDom = document.getElementById("totalItem");
-const itemListDom = document.getElementById("itemListDom");
-const recordChildName = document.getElementById("recordChildName");
-const personCheckCount = document.getElementById("personCheckCount");
-const treasureMapWrap = document.getElementById("treasureMapWrap");
-const recordListDom = document.getElementById("recordListDom");
-const backFromRecordBtn = document.getElementById("backFromRecordBtn");
+// 班级宝盒
+function renderBox(){
+  const total = appData.records.length;
+  const itemCount = appData.records.length;
+  document.getElementById("totalCheck").innerText = total;
+  document.getElementById("totalItem").innerText = itemCount;
+  const itemDom = document.getElementById("itemListDom");
+  itemDom.innerHTML = "";
+  appData.records.forEach(r=>{
+    const item = itemPool.find(i=>i.key === r.treasureKey);
+    if(!item) return;
+    const tag = document.createElement("span");
+    tag.className = "item-tag";
+    tag.innerText = item.icon + item.name;
+    itemDom.appendChild(tag);
+  })
+  document.getElementById("boxStage").innerText = "探险进行中";
+  document.getElementById("boxStageEn").innerText = "Adventure ongoing";
+}
 
-let selectedChild = null;
-let currentIdentity = null;
-let selectedMediaBase64 = null;
-let selectedMediaType = null;
+// 个人藏宝图
+function renderTreasure(childId){
+  const kidRec = appData.records.filter(r=>r.childId === childId);
+  const count = kidRec.length;
+  document.getElementById("personCheckCount").innerText = count;
+  const mapWrap = document.getElementById("treasureMapWrap");
+  mapWrap.innerHTML = `<div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图 <span class="en-small">My treasure map</span></div><div class="treasure-grid">`;
+  for(let i=0;i<12;i++){
+    const cell = document.createElement("div");
+    cell.className = "treasure-cell";
+    if(i<count){
+      cell.classList.add("active");
+      const rec = kidRec[i];
+      const item = itemPool.find(it=>it.key === rec.treasureKey);
+      cell.innerText = item ? item.icon : "✓";
+    }else{
+      cell.innerText = "·";
+    }
+    mapWrap.querySelector(".treasure-grid").appendChild(cell);
+  }
+  mapWrap.innerHTML += "</div>";
 
-fileInput.onchange = function(e){
-  const file = e.target.files[0];
-  if(!file){selectedMediaBase64=null;selectedMediaType=null;mediaPreviewWrap.innerHTML="";return;}
+  // 打卡明细
+  const recordDom = document.getElementById("recordListDom");
+  recordDom.innerHTML = "";
+  kidRec.reverse().forEach(r=>{
+    const item = itemPool.find(i=>i.key === r.treasureKey);
+    const div = document.createElement("div");
+    div.className = "record-item";
+    div.innerHTML = `
+      <div>📅${r.dateStr}</div>
+      <div>宝藏：${item?item.icon+item.name:"-"}</div>
+      <div>文字：${r.note||"无"}</div>
+      <div>英文打卡：${r.engNote||"无"}</div>
+      ${r.mediaSrc ? `<div><img class="img-preview" src="${r.mediaSrc}"></div>` : ""}
+    `;
+    recordDom.appendChild(div);
+  })
+}
+
+// 随机句子
+function getTodaySentence(){
+  const idx = Math.floor(Math.random()*sentencePool.length);
+  return sentencePool[idx];
+}
+todaySent = getTodaySentence();
+todaySuggest = suggestPool[Math.floor(Math.random()*suggestPool.length)];
+document.getElementById("engSentText").innerText = todaySent.eng;
+document.getElementById("cnSentText").innerText = todaySent.cn;
+document.getElementById("suggestText").innerText = todaySuggest;
+
+// 播放按钮绑定
+document.getElementById("playEngBtn").addEventListener("click",()=>{
+  speakEngCn(todaySent.eng, todaySent.cn);
+})
+
+// 身份选择
+document.getElementById("btnParent").onclick = ()=>{
+  identity = "parent";
+  document.getElementById("showIdentity").innerText = "家长 Parent";
+  document.getElementById("currIdentityText").innerText = "家长 Parent";
+  document.getElementById("parentSuggestCard").style.display = "block";
+  showPage(1);
+  renderChildList();
+  renderStat();
+}
+document.getElementById("btnTeacher").onclick = ()=>{
+  identity = "teacher";
+  document.getElementById("showIdentity").innerText = "老师 Teacher";
+  document.getElementById("currIdentityText").innerText = "老师 Teacher";
+  document.getElementById("parentSuggestCard").style.display = "none";
+  showPage(1);
+  renderChildList();
+  renderStat();
+}
+
+// 返回按钮
+document.getElementById("back0Btn").onclick = ()=>showPage(0);
+document.getElementById("back1Btn").onclick = ()=>showPage(1);
+document.getElementById("back2Btn").onclick = ()=>showPage(2);
+document.getElementById("backFromBoxBtn").onclick = ()=>showPage(1);
+document.getElementById("backFromRecordBtn").onclick = ()=>showPage(2);
+
+// 菜单按钮
+document.getElementById("goTaskBtn").onclick = ()=>{
+  const kid = childList.find(c=>c.id===selectedChildId);
+  document.getElementById("currChildName").innerText = kid.name;
+  document.getElementById("noteInput").value = "";
+  document.getElementById("engCheckInput").value = "";
+  mediaFile = null;
+  mediaPreviewUrl = "";
+  document.getElementById("mediaPreviewWrap").innerHTML = "";
+  showPage(3);
+}
+document.getElementById("goRecordBtn").onclick = ()=>{
+  const kid = childList.find(c=>c.id===selectedChildId);
+  document.getElementById("recordChildName").innerText = kid.name;
+  renderTreasure(selectedChildId);
+  showPage(6);
+}
+document.getElementById("goBoxBtn").onclick = ()=>{
+  renderBox();
+  showPage(5);
+}
+
+// 文件预览
+document.getElementById("fileInput").onchange = function(e){
+  const f = e.target.files[0];
+  if(!f) return;
+  mediaFile = f;
   const reader = new FileReader();
   reader.onload = function(ev){
-    selectedMediaBase64 = ev.target.result;
-    if(file.type.startsWith("video/")){
-      selectedMediaType = "video";
-      mediaPreviewWrap.innerHTML = `<video class="img-preview" controls src="${selectedMediaBase64}"></video>`;
+    mediaPreviewUrl = ev.target.result;
+    const wrap = document.getElementById("mediaPreviewWrap");
+    wrap.innerHTML = "";
+    if(f.type.startsWith("video")){
+      const v = document.createElement("video");
+      v.className = "img-preview";
+      v.controls = true;
+      v.src = mediaPreviewUrl;
+      wrap.appendChild(v);
     }else{
-      selectedMediaType = "image";
-      mediaPreviewWrap.innerHTML = `<img class="img-preview" src="${selectedMediaBase64}">`;
+      const img = document.createElement("img");
+      img.className = "img-preview";
+      img.src = mediaPreviewUrl;
+      wrap.appendChild(img);
     }
-  };
-  reader.readAsDataURL(file);
-};
-
-function renderChildList(){
-  childListDom.innerHTML = "";
-  childList.forEach(c=>{
-    let div = document.createElement("div");
-    div.className = "child-item";
-    div.innerHTML = `${c.name}<span class="en-small">${c.en}</span>`;
-    div.dataset.id = c.id;
-    div.dataset.en = c.en;
-    div.onclick = ()=>{
-      document.querySelectorAll(".child-item").forEach(d=>d.classList.remove("active"));
-      div.classList.add("active");
-      selectedChild = c;
-      currChildName2.innerText = `${c.name}(${c.en})`;
-      goPage(page2);
-    };
-    childListDom.appendChild(div);
-  });
-}
-function renderBoxBrief(){
-  let box = initBox();
-  let sum = Object.values(box.collected).reduce((a,b)=>a+b,0);
-  const st = getBoxStage(sum);
-  boxBrief.innerHTML = `<div>阶段 Stage：${st.zh}｜${st.en}</div><div>总打卡 Total：${box.totalCheckIns}｜宝藏总数 Total treasures：${sum}</div>`;
-}
-function renderBoxPage(){
-  let box = initBox();
-  let sumItem = Object.values(box.collected).reduce((a,b)=>a+b,0);
-  const st = getBoxStage(sumItem);
-  boxStageDom.innerText = st.zh;
-  boxStageEnDom.innerText = st.en;
-  totalCheckDom.innerText = box.totalCheckIns;
-  totalItemDom.innerText = sumItem;
-  itemListDom.innerHTML = "";
-  itemPool.forEach(it=>{
-    let cnt = box.collected[it.key]||0;
-    let tag = document.createElement("span");
-    tag.className = "item-tag";
-    tag.innerText = `${it.icon} ${it.name}(${it.en}) ×${cnt}`;
-    itemListDom.appendChild(tag);
-  });
-}
-function renderTreasureMap(personCollect){
-  let html = `<div style="text-align:center;margin-bottom:8px;font-weight:bold">🗺️我的宝藏地图 <span class="en-small">My treasure map</span></div>`;
-  itemPool.forEach(it=>{
-    let num = personCollect[it.key]||0;
-    html += `<div class="treasure-line"><div class="treasure-label">${it.icon} ${it.name}(${it.en})：${num}个</div><div class="treasure-grid">`;
-    for(let i=0;i<12;i++){
-      html += i < num
-        ? `<div class="treasure-cell active">${it.icon}</div>`
-        : `<div class="treasure-cell"></div>`;
-    }
-    html += `</div></div>`;
-  });
-  treasureMapWrap.innerHTML = html;
-}
-function renderPersonRecord(child){
-  const box = initBox();
-  const myRecords = box.records.filter(r=>r.childId === child.id);
-  recordChildName.innerText = `${child.name}(${child.en})`;
-  personCheckCount.innerText = myRecords.length;
-  let personCollect = {flower:0,pinecone:0,leaf:0,grass:0};
-  myRecords.forEach(r=>{personCollect[r.item]+=1;});
-  renderTreasureMap(personCollect);
-  recordListDom.innerHTML = "";
-  if(myRecords.length === 0){
-    recordListDom.innerHTML = "<div style='color:#777'>暂无打卡，快去完成打卡收集宝藏吧！｜No records yet, go check‑in for treasures!</div>";
-  }else{
-    myRecords.slice().reverse().forEach(r=>{
-      const findItem = itemPool.find(p=>p.key === r.item);
-      let div = document.createElement("div");
-      div.className = "record-item";
-      let htmlText = `<div>${r.time}｜身份 Role：${r.identity==='parent'?'家长Parent':'老师Teacher'}｜获得 Got ${findItem.icon}${findItem.name}(${findItem.en})</div>`;
-      if(r.note) htmlText += `<div style="margin:4px 0;color:#333">📝${r.note}</div>`;
-      if(r.media && r.mediaType === "image") htmlText += `<img class="img-preview" src="${r.media}">`;
-      if(r.media && r.mediaType === "video") htmlText += `<video class="img-preview" controls src="${r.media}"></video>`;
-      div.innerHTML = htmlText;
-      recordListDom.appendChild(div);
-    });
   }
-}
-function resetTaskForm(){
-  noteInput.value="";
-  fileInput.value="";
-  mediaPreviewWrap.innerHTML="";
-  selectedMediaBase64=null;
-  selectedMediaType=null;
+  reader.readAsDataURL(f);
 }
 
-btnParent.onclick = function(){
-  currentIdentity = "parent";
-  showIdentity.innerText = "👨‍👩‍👧‍👦家长 Parent";
-  teacherStatCard.classList.add("hide");
-  goPage(page1);
-};
-btnTeacher.onclick = function(){
-  currentIdentity = "teacher";
-  showIdentity.innerText = "👩‍🏫老师 Teacher";
-  teacherStatCard.classList.remove("hide");
-  renderTeacherStat();
-  goPage(page1);
-};
-back0Btn.onclick = ()=>{
-  currentIdentity=null;selectedChild=null;
-  document.querySelectorAll(".child-item").forEach(d=>d.classList.remove("active"));
-  renderBoxBrief();
-  goPage(page0);
-};
-back1Btn.onclick = ()=>{
-  renderBoxBrief();
-  if(currentIdentity === "teacher") renderTeacherStat();
-  goPage(page1);
-};
-back2Btn.onclick = ()=>{
-  goPage(page2);
-};
-goTaskBtn.onclick = function(){
-  if(!selectedChild) return;
-  currChildName.innerText = `${selectedChild.name}(${selectedChild.en})`;
-  currIdentityText.innerText = currentIdentity==="parent"?"家长 Parent":"老师 Teacher";
-  if(currentIdentity === "parent"){
-    parentSuggestCard.classList.remove("hide");
-    suggestText.innerHTML = getTodaySuggestion();
-  }else{
-    parentSuggestCard.classList.add("hide");
+// 提交打卡 + 翻转后延时2s展示结果（你要求的效果）
+document.getElementById("doCheckInBtn").onclick = ()=>{
+  const note = document.getElementById("noteInput").value.trim();
+  const engNote = document.getElementById("engCheckInput").value.trim();
+  if(!engNote){
+    alert("请填写英文打卡备注");
+    return;
   }
-  resetTaskForm();
-  goPage(page3);
-};
-goRecordBtn.onclick = function(){
-  if(!selectedChild) return;
-  renderPersonRecord(selectedChild);
-  goPage(page6);
-};
-doCheckInBtn.onclick = function(){
-  if(isDrawing) return;
-  if(!selectedChild || !currentIdentity) return;
-  isDrawing = true;
-  let box = initBox();
-  const drawRes = randomDraw();
-  box.totalCheckIns += 1;
-  box.collected[drawRes.key] += 1;
-  box.records.push({
-    childId:selectedChild.id,
-    childName:selectedChild.name,
-    childEn:selectedChild.en,
-    item:drawRes.key,
-    identity:currentIdentity,
-    note:noteInput.value.trim(),
-    media:selectedMediaBase64,
-    mediaType:selectedMediaType,
-    time:formatTime(),
-    suggest:currentIdentity==="parent" ? getTodaySuggestion() : ""
-  });
-  saveBox(box);
+  const item = itemPool[Math.floor(Math.random()*itemPool.length)];
+  const todayStr = new Date().toLocaleDateString();
+  const newRec = {
+    childId: selectedChildId,
+    identity: identity,
+    dateStr: todayStr,
+    note: note,
+    engNote: engNote,
+    treasureKey: item.key,
+    mediaSrc: mediaPreviewUrl
+  }
+  appData.records.push(newRec);
+  saveData(appData);
 
+  // 翻牌动画
+  const flipCard = document.getElementById("flipCard");
   flipCard.classList.remove("flipped");
-  resultText.style.display="none";
-  drawDoneBtn.style.display="none";
-  drawIcon.innerText = drawRes.icon;
-  drawItemName.innerText = `${drawRes.name}(${drawRes.en})`;
-  goPage(page4);
-
+  document.getElementById("resultText").style.display = "none";
+  document.getElementById("drawDoneBtn").style.display = "none";
   setTimeout(()=>{
     flipCard.classList.add("flipped");
+    document.getElementById("drawIcon").innerText = item.icon;
+    // 翻转完成后，再等2秒弹出文字
     setTimeout(()=>{
-      resultText.style.display="block";
-      drawDoneBtn.style.display="block";
-      isDrawing = false;
-    },400);
-  },2000);
-};
-drawDoneBtn.onclick = function(){
-  selectedChild=null;
-  document.querySelectorAll(".child-item").forEach(d=>d.classList.remove("active"));
-  renderBoxBrief();
-  goPage(page0);
-};
-goBoxBtn.onclick = function(){renderBoxPage();goPage(page5);};
-backFromBoxBtn.onclick = function(){renderBoxBrief();if(currentIdentity === "teacher") renderTeacherStat();goPage(page1);};
-backFromRecordBtn.onclick = function(){goPage(page2);};
+      document.getElementById("drawItemName").innerText = item.name;
+      document.getElementById("resultText").style.display = "block";
+      document.getElementById("drawDoneBtn").style.display = "block";
+    },2000)
+  },200)
+  showPage(4);
+}
 
-renderChildList();
-renderBoxBrief();
-goPage(page0);
+document.getElementById("drawDoneBtn").onclick = ()=>{
+  showPage(2);
+  document.getElementById("resultText").style.display = "none";
+  document.getElementById("drawDoneBtn").style.display = "none";
+}
+
+// 初始化
+showPage(0);
 </script>
 </body>
 </html>
