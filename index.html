@@ -5,312 +5,63 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Prek‑C｜森林探险家打卡 | Forest Explorer Check‑in</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:"PingFang SC",system-ui,-apple-system;
-  touch-action: manipulation;
-}
-body{
-  background:#f4f9ee;
-  color:#2c422e;
-  padding:0;
-  max-width:100%;
-  overflow-x:hidden;
-}
-.app{
-  width:100vw;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  background:#f4f9ee;
-}
-.phone{
-  width:100%;
-  max-width:430px;
-  background:#f4f9ee;
-  min-height:100vh;
-  padding:12px;
-  margin:0 auto;
-  box-shadow:0 0 20px rgba(0,0,0,0.05);
-  position:relative;
-  overflow:hidden;
-}
-.page-wrap{
-  width:100%;
-  height:100%;
-  position:absolute;
-  top:0;
-  left:0;
-  transition: transform 0.4s ease-in-out;
-  backface-visibility:hidden;
-  padding:12px;
-  overflow-y:auto;
-  -webkit-overflow-scrolling: touch;
-}
-.page-next{
-  transform: translateX(105%);
-}
-.page-prev{
-  transform: translateX(-105%);
-}
-.page-active{
-  transform: translateX(0);
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"PingFang SC",system-ui,-apple-system;touch-action: manipulation;}
+body{background:#f4f9ee;color:#2c422e;padding:0;max-width:100%;overflow-x:hidden;}
+.app{width:100vw;min-height:100vh;display:flex;justify-content:center;align-items:flex-start;background:#f4f9ee;}
+.phone{width:100%;max-width:430px;background:#f4f9ee;min-height:100vh;padding:12px;margin:0 auto;box-shadow:0 0 20px rgba(0,0,0,0.05);position:relative;overflow:hidden;}
+.page-wrap{width:100%;height:100%;position:absolute;top:0;left:0;transition: transform 0.4s ease-in-out;backface-visibility:hidden;padding:12px;overflow-y:auto;-webkit-overflow-scrolling: touch;}
+.page-next{transform: translateX(105%);}
+.page-prev{transform: translateX(-105%);}
+.page-active{transform: translateX(0);}
 h1{font-size:20px;margin-bottom:6px;color:#375739;text-align:center}
 .sub{color:#547056;margin-bottom:16px;font-size:14px;text-align:center}
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:14px;
-  box-shadow:0 2px 6px #00000010;
-}
-.btn{
-  background:#548c57;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  padding:12px 10px;
-  font-size:16px;
-  width:100%;
-  cursor:pointer;
-  margin-top:8px;
-}
+.card{background:#fff;border-radius:12px;padding:14px;margin-bottom:14px;box-shadow:0 2px 6px #00000010;}
+.btn{background:#548c57;color:#fff;border:none;border-radius:10px;padding:12px 10px;font-size:16px;width:100%;cursor:pointer;margin-top:8px;}
 .btn:active{background:#437046}
 .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.child-item{
-  border:1px solid #b8d2ba;
-  border-radius:10px;
-  padding:10px 4px;
-  text-align:center;
-  cursor:pointer;
-  background:#f8fbf4;
-  font-size:14px;
-  line-height:1.4;
-}
+.child-item{border:1px solid #b8d2ba;border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;background:#f8fbf4;font-size:14px;line-height:1.4;}
 .child-item.active{background:#cce8cf;border-color:#548c57}
 .box-view{background:#fff8e8;border-radius:12px;padding:14px;margin:12px 0}
-.item-tag{
-  display:inline-block;
-  background:#e6f2e7;
-  border-radius:8px;
-  padding:4px 8px;
-  margin:3px;
-  font-size:13px;
-}
+.item-tag{display:inline-block;background:#e6f2e7;border-radius:8px;padding:4px 8px;margin:3px;font-size:13px;}
 .draw-anim{text-align:center;padding:16px;font-size:16px}
 .back-btn{background:#888}
 .record-item{border-bottom:1px solid #eee;padding:10px 0;font-size:14px;line-height:1.5}
-textarea{
-  width:100%;
-  border:1px solid #ccc;
-  border-radius:8px;
-  padding:10px;
-  font-size:15px;
-  min-height:75px;
-  margin:8px 0;
-}
+textarea{width:100%;border:1px solid #ccc;border-radius:8px;padding:10px;font-size:15px;min-height:75px;margin:8px 0;}
 .img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:contain;}
 video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:contain;}
 .tip-text{font-size:12px;color:#666;margin:4px 0;}
-.treasure-map{
-  border:2px dashed #b8d2ba;
-  border-radius:12px;
-  padding:12px;
-  margin:8px 0;
-  background:#fbfdf8;
-}
+.treasure-map{border:2px dashed #b8d2ba;border-radius:12px;padding:12px;margin:8px 0;background:#fbfdf8;}
 .treasure-line{margin:8px 0}
 .treasure-label{font-size:14px;margin-bottom:4px}
 .treasure-grid{display:flex;gap:3px;flex-wrap:wrap}
-.treasure-cell{
-  width:24px;
-  height:24px;
-  border:1px solid #ddd;
-  border-radius:5px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  background:#f7f7f7;
-}
+.treasure-cell{width:24px;height:24px;border:1px solid #ddd;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:14px;background:#f7f7f7;}
 .treasure-cell.active{background:#e6f2e7;border-color:#548c57}
 .hide{display:none !important;}
-/* 翻牌卡片 */
-.flip-wrap{
-  perspective: 600px;
-  width:140px;
-  height:180px;
-  margin:16px auto;
-}
-.flip-card{
-  width:100%;
-  height:100%;
-  position:relative;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-.flip-card.flipped{
-  transform: rotateY(180deg);
-}
-.flip-front, .flip-back{
-  position:absolute;
-  width:100%;
-  height:100%;
-  backface-visibility:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:12px;
-  font-size:44px;
-}
-.flip-front{
-  background:#b8d2ba;
-  color:#2c422e;
-  border:2px solid #548c57;
-}
-.flip-back{
-  background:#fff;
-  border:2px solid #548c57;
-  transform: rotateY(180deg);
-}
-
-/* 语音播放按钮 */
-.audio-btn{
-  display:inline-block;
-  border:none;
-  background:#62a866;
-  color:white;
-  border-radius:8px;
-  padding:4px 8px;
-  font-size:14px;
-  margin-left:8px;
-  cursor:pointer;
-}
+.flip-wrap{perspective: 600px;width:140px;height:180px;margin:16px auto;}
+.flip-card{width:100%;height:100%;position:relative;transition: transform 0.8s;transform-style: preserve-3d;}
+.flip-card.flipped{transform: rotateY(180deg);}
+.flip-front, .flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:44px;}
+.flip-front{background:#b8d2ba;color:#2c422e;border:2px solid #548c57;}
+.flip-back{background:#fff;border:2px solid #548c57;transform: rotateY(180deg);}
+.audio-btn{display:inline-block;border:none;background:#62a866;color:white;border-radius:8px;padding:4px 8px;font-size:14px;margin-left:8px;cursor:pointer;}
 .audio-btn:active{background:#4e8c52}
-.cn-sent{
-  color:#666;
-  font-size:14px;
-  margin-top:4px;
-}
-
-/* 身份封面 */
-.cover{
-  width:100%;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px 12px;
-}
-.cover-card{
-  width:100%;
-  border-radius:20px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.35), transparent 26%),
-    radial-gradient(circle at 80% 18%, rgba(255,255,255,0.25), transparent 22%),
-    linear-gradient(160deg, #6fae6a 0%, #4b8c59 45%, #2f6b45 100%);
-  box-shadow:0 18px 40px rgba(44,82,46,0.35);
-  position:relative;
-}
-.cover-forest{
-  position:absolute;
-  left:0;right:0;bottom:0;
-  height:42%;
-  background:
-    linear-gradient(to top, rgba(20,60,30,0.55), transparent),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='180' viewBox='0 0 240 180'><g fill='%231f5132'><ellipse cx='40' cy='150' rx='36' ry='14'/><ellipse cx='90' cy='140' rx='46' ry='18'/><ellipse cx='150' cy='148' rx='40' ry='16'/><ellipse cx='200' cy='136' rx='34' ry='13'/></g><g fill='%232f7a47'><circle cx='40' cy='130' r='22'/><circle cx='90' cy='116' r='28'/><circle cx='150' cy='124' r='24'/><circle cx='200' cy='114' r='20'/></g><g fill='%233f9a58'><polygon points='40,90 28,130 52,130'/><polygon points='90,76 74,120 106,120'/><polygon points='150,84 134,124 166,124'/><polygon points='200,74 184,114 216,114'/></g></svg>") bottom center/cover no-repeat;
-  opacity:0.9;
-  pointer-events:none;
-}
-.cover-content{
-  position:relative;
-  z-index:2;
-  padding:40px 18px 180px;
-  text-align:center;
-  color:#fff;
-}
-.cover-logo{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(255,255,255,0.18);
-  border:1px solid rgba(255,255,255,0.35);
-  padding:8px 14px;
-  border-radius:999px;
-  font-size:13px;
-  letter-spacing:1px;
-  margin-bottom:14px;
-}
-.cover-title{
-  font-size:30px;
-  font-weight:800;
-  line-height:1.2;
-  margin-bottom:10px;
-  text-shadow:0 4px 14px rgba(0,0,0,0.25);
-}
-.cover-title span{
-  background:linear-gradient(90deg,#fff6b3,#ffd966);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-.cover-slogan{
-  font-size:15px;
-  opacity:0.95;
-  margin-bottom:18px;
-  line-height:1.5;
-}
-.cover-hint{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:18px;
-  flex-wrap:wrap;
-}
-.cover-hint b{
-  background:rgba(255,255,255,0.2);
-  border-radius:10px;
-  padding:8px 10px;
-  font-size:13px;
-}
-.cover-buttons{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin-top:10px;
-}
-.cover-btn{
-  border:none;
-  border-radius:14px;
-  padding:14px;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  color:#2c422e;
-  background:linear-gradient(180deg,#fffbe4,#ffe77a);
-  box-shadow:0 10px 24px rgba(0,0,0,0.18);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-}
-.cover-btn.teacher{
-  background:linear-gradient(180deg,#eafff2,#a6e4c1);
-}
-.cover-footer{
-  position:absolute;
-  left:0;right:0;bottom:14px;
-  text-align:center;
-  color:rgba(255,255,255,0.8);
-  font-size:12px;
-  z-index:2;
-}
-.stat-item{
-  padding:4px 0;
-  font-size:14px;
-}
+.cn-sent{color:#666;font-size:14px;margin-top:4px;}
+.cover{width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px 12px;}
+.cover-card{width:100%;border-radius:20px;overflow:hidden;background:radial-gradient(circle at 20% 10%, rgba(255,255,255,0.35), transparent 26%),radial-gradient(circle at 80% 18%, rgba(255,255,255,0.25), transparent 22%),linear-gradient(160deg, #6fae6a 0%, #4b8c59 45%, #2f6b45 100%);box-shadow:0 18px 40px rgba(44,82,46,0.35);position:relative;}
+.cover-forest{position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(to top, rgba(20,60,30,0.55), transparent),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='180' viewBox='0 0 240 180'><g fill='%231f5132'><ellipse cx='40' cy='150' rx='36' ry='14'/><ellipse cx='90' cy='140' rx='46' ry='18'/><ellipse cx='150' cy='148' rx='40' ry='16'/><ellipse cx='200' cy='136' rx='34' ry='13'/></g><g fill='%232f7a47'><circle cx='40' cy='130' r='22'/><circle cx='90' cy='116' r='28'/><circle cx='150' cy='124' r='24'/><circle cx='200' cy='114' r='20'/></g><g fill='%233f9a58'><polygon points='40,90 28,130 52,130'/><polygon points='90,76 74,120 106,120'/><polygon points='150,84 134,124 166,124'/><polygon points='200,74 184,114 216,114'/></g></svg>") bottom center/cover no-repeat;opacity:0.9;pointer-events:none;}
+.cover-content{position:relative;z-index:2;padding:40px 18px 180px;text-align:center;color:#fff;}
+.cover-logo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.35);padding:8px 14px;border-radius:999px;font-size:13px;letter-spacing:1px;margin-bottom:14px;}
+.cover-title{font-size:30px;font-weight:800;line-height:1.2;margin-bottom:10px;text-shadow:0 4px 14px rgba(0,0,0,0.25);}
+.cover-title span{background:linear-gradient(90deg,#fff6b3,#ffd966);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.cover-slogan{font-size:15px;opacity:0.95;margin-bottom:18px;line-height:1.5;}
+.cover-hint{display:flex;justify-content:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.cover-hint b{background:rgba(255,255,255,0.2);border-radius:10px;padding:8px 10px;font-size:13px;}
+.cover-buttons{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.cover-btn{border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;color:#2c422e;background:linear-gradient(180deg,#fffbe4,#ffe77a);box-shadow:0 10px 24px rgba(0,0,0,0.18);display:flex;align-items:center;justify-content:center;gap:10px;}
+.cover-btn.teacher{background:linear-gradient(180deg,#eafff2,#a6e4c1);}
+.cover-footer{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:rgba(255,255,255,0.8);font-size:12px;z-index:2;}
+.stat-item{padding:4px 0;font-size:14px;}
 .en-small{font-size:12px;opacity:0.8;display:block;}
 </style>
 </head>
@@ -318,7 +69,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 <div class="app">
   <div class="phone">
     <div id="app">
-      <!--P0 身份封面页-->
       <div id="page0" class="page-wrap page-active">
         <div class="cover">
           <div class="cover-forest"></div>
@@ -340,7 +90,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         </div>
       </div>
 
-      <!--P1 选择小朋友页-->
       <div id="page1" class="page-wrap page-next">
         <h1>🌲 Prek‑C 森林探险家 <span class="en-small">Forest Explorer</span></h1>
         <div class="sub">身份：<span id="showIdentity"></span>｜选择小探险家 <span class="en-small">Select little explorer</span></div>
@@ -361,7 +110,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="back0Btn">← 返回选择身份 <span class="en-small">Back to role</span></button>
       </div>
 
-      <!--P2 功能选择页（打卡 / 藏宝记录）-->
       <div id="page2" class="page-wrap page-next">
         <h1>✨探险菜单 <span class="en-small">Adventure Menu</span></h1>
         <div class="sub">小探险家：<span id="currChildName2"></span></div>
@@ -372,7 +120,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="back1Btn">← 返回选择小朋友 <span class="en-small">Back to kid select</span></button>
       </div>
 
-      <!--P3 打卡填写页【英文+中文释义+连续朗读】-->
       <div id="page3" class="page-wrap page-next">
         <h1>🌲探险打卡 <span class="en-small">Adventure Check‑in</span></h1>
         <div class="sub">小探险家：<span id="currChildName"></span>｜身份：<span id="currIdentityText"></span></div>
@@ -403,7 +150,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="back2Btn">← 返回探险菜单 <span class="en-small">Back to menu</span></button>
       </div>
 
-      <!--P4 翻牌抽宝藏-->
       <div id="page4" class="page-wrap page-next">
         <div class="draw-anim card">
           <h2>🎉探险打卡成功！<span class="en-small">Check‑in Success!</span></h2>
@@ -421,7 +167,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         </div>
       </div>
 
-      <!--P5 班级宝盒-->
       <div id="page5" class="page-wrap page-next">
         <h1>📦 Prek‑C 班级收藏宝盒 <span class="en-small">Class Treasure Box</span></h1>
         <div class="box-view">
@@ -434,7 +179,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         <button class="btn back-btn" id="backFromBoxBtn">← 返回上一页 <span class="en-small">Back</span></button>
       </div>
 
-      <!--P6 个人藏宝图（老师可以看到英文打卡）-->
       <div id="page6" class="page-wrap page-next">
         <h1>📜个人探险藏宝图 <span class="en-small">Personal Treasure Map</span></h1>
         <div class="sub">小探险家：<span id="recordChildName"></span></div>
@@ -450,18 +194,13 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
         </div>
         <button class="btn back-btn" id="backFromRecordBtn">← 返回探险菜单 <span class="en-small">Back to menu</span></button>
       </div>
-
     </div>
   </div>
 </div>
 
 <script>
-// 语音：英文朗读，停顿，再中文释义
 function speakEngCn(eng, cn) {
-  if (!('speechSynthesis' in window)) {
-    alert("你的浏览器不支持语音朗读");
-    return;
-  }
+  if (!('speechSynthesis' in window)) {alert("你的浏览器不支持语音朗读");return;}
   speechSynthesis.cancel();
   const utterEng = new SpeechSynthesisUtterance(eng);
   utterEng.lang = 'en-US';
@@ -477,7 +216,6 @@ function speakEngCn(eng, cn) {
   speechSynthesis.speak(utterEng);
 }
 
-// 孩子名单【已修正英文名：Strawberry】
 const childList = [
   {id:1,name:"何心熠",en:"Brainy"},
   {id:2,name:"曾麦甜",en:"Maya"},
@@ -505,7 +243,6 @@ const childList = [
   {id:24,name:"杜圣均",en:"Jasper"}
 ];
 
-// 宝藏池
 const itemPool = [
   {key:"flower",name:"小花",en:"Flower",icon:"🌸"},
   {key:"pinecone",name:"松果",en:"Pinecone",icon:"🌰"},
@@ -513,14 +250,12 @@ const itemPool = [
   {key:"grass",name:"小草",en:"Grass",icon:"🌿"}
 ];
 
-// 双语句子池
 const sentencePool = [
   {eng:"I like to run.",cn:"我喜欢跑。"},
   {eng:"I can jump.",cn:"我会跳。"},
   {eng:"I see a tree.",cn:"我看见一棵树。"},
   {eng:"I love nature.",cn:"我爱大自然。"}
 ];
-// 运动建议池
 const suggestPool = [
   "（运动小建议：和宝贝一起原地跳一跳）",
   "（运动小建议：亲子接力小跑）",
@@ -536,7 +271,6 @@ let todaySuggest = "";
 let mediaFile = null;
 let mediaPreviewUrl = "";
 
-// 本地存储key
 const STORAGE_KEY = "forestExplorerCheckin";
 function loadData(){
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -548,17 +282,11 @@ function saveData(data){
 }
 let appData = loadData();
 
-// 页面切换
 function showPage(pageIndex){
   const pages = document.querySelectorAll(".page-wrap");
-  pages.forEach(p=>{
-    p.classList.remove("page-active","page-next","page-prev");
-  })
-  if(pageIndex>currentPage){
-    pages[pageIndex].classList.add("page-next");
-  }else if(pageIndex<currentPage){
-    pages[pageIndex].classList.add("page-prev");
-  }
+  pages.forEach(p=>{p.classList.remove("page-active","page-next","page-prev");})
+  if(pageIndex>currentPage){pages[pageIndex].classList.add("page-next");}
+  else if(pageIndex<currentPage){pages[pageIndex].classList.add("page-prev");}
   setTimeout(()=>{
     pages[pageIndex].classList.remove("page-next","page-prev");
     pages[pageIndex].classList.add("page-active");
@@ -566,7 +294,6 @@ function showPage(pageIndex){
   currentPage = pageIndex;
 }
 
-// 渲染小朋友列表
 function renderChildList(){
   const dom = document.getElementById("childListDom");
   dom.innerHTML = "";
@@ -585,7 +312,6 @@ function renderChildList(){
   })
 }
 
-// 统计今日打卡
 function renderStat(){
   const today = new Date().toLocaleDateString();
   const todayRec = appData.records.filter(r=>r.dateStr===today);
@@ -601,7 +327,6 @@ function renderStat(){
   })
 }
 
-// 班级宝盒
 function renderBox(){
   const total = appData.records.length;
   const itemCount = appData.records.length;
@@ -621,7 +346,6 @@ function renderBox(){
   document.getElementById("boxStageEn").innerText = "Adventure ongoing";
 }
 
-// 个人藏宝图
 function renderTreasure(childId){
   const kidRec = appData.records.filter(r=>r.childId === childId);
   const count = kidRec.length;
@@ -636,14 +360,10 @@ function renderTreasure(childId){
       const rec = kidRec[i];
       const item = itemPool.find(it=>it.key === rec.treasureKey);
       cell.innerText = item ? item.icon : "✓";
-    }else{
-      cell.innerText = "·";
-    }
+    }else{cell.innerText = "·";}
     mapWrap.querySelector(".treasure-grid").appendChild(cell);
   }
   mapWrap.innerHTML += "</div>";
-
-  // 打卡明细
   const recordDom = document.getElementById("recordListDom");
   recordDom.innerHTML = "";
   kidRec.reverse().forEach(r=>{
@@ -661,7 +381,6 @@ function renderTreasure(childId){
   })
 }
 
-// 随机句子
 function getTodaySentence(){
   const idx = Math.floor(Math.random()*sentencePool.length);
   return sentencePool[idx];
@@ -672,46 +391,35 @@ document.getElementById("engSentText").innerText = todaySent.eng;
 document.getElementById("cnSentText").innerText = todaySent.cn;
 document.getElementById("suggestText").innerText = todaySuggest;
 
-// 播放按钮绑定
-document.getElementById("playEngBtn").addEventListener("click",()=>{
-  speakEngCn(todaySent.eng, todaySent.cn);
-})
+document.getElementById("playEngBtn").addEventListener("click",()=>{speakEngCn(todaySent.eng, todaySent.cn);})
 
-// 身份选择
 document.getElementById("btnParent").onclick = ()=>{
   identity = "parent";
   document.getElementById("showIdentity").innerText = "家长 Parent";
   document.getElementById("currIdentityText").innerText = "家长 Parent";
   document.getElementById("parentSuggestCard").style.display = "block";
-  showPage(1);
-  renderChildList();
-  renderStat();
+  showPage(1);renderChildList();renderStat();
 }
 document.getElementById("btnTeacher").onclick = ()=>{
   identity = "teacher";
   document.getElementById("showIdentity").innerText = "老师 Teacher";
   document.getElementById("currIdentityText").innerText = "老师 Teacher";
   document.getElementById("parentSuggestCard").style.display = "none";
-  showPage(1);
-  renderChildList();
-  renderStat();
+  showPage(1);renderChildList();renderStat();
 }
 
-// 返回按钮
 document.getElementById("back0Btn").onclick = ()=>showPage(0);
 document.getElementById("back1Btn").onclick = ()=>showPage(1);
 document.getElementById("back2Btn").onclick = ()=>showPage(2);
 document.getElementById("backFromBoxBtn").onclick = ()=>showPage(1);
 document.getElementById("backFromRecordBtn").onclick = ()=>showPage(2);
 
-// 菜单按钮
 document.getElementById("goTaskBtn").onclick = ()=>{
   const kid = childList.find(c=>c.id===selectedChildId);
   document.getElementById("currChildName").innerText = kid.name;
   document.getElementById("noteInput").value = "";
   document.getElementById("engCheckInput").value = "";
-  mediaFile = null;
-  mediaPreviewUrl = "";
+  mediaFile = null;mediaPreviewUrl = "";
   document.getElementById("mediaPreviewWrap").innerHTML = "";
   showPage(3);
 }
@@ -721,15 +429,10 @@ document.getElementById("goRecordBtn").onclick = ()=>{
   renderTreasure(selectedChildId);
   showPage(6);
 }
-document.getElementById("goBoxBtn").onclick = ()=>{
-  renderBox();
-  showPage(5);
-}
+document.getElementById("goBoxBtn").onclick = ()=>{renderBox();showPage(5);}
 
-// 文件预览
 document.getElementById("fileInput").onchange = function(e){
-  const f = e.target.files[0];
-  if(!f) return;
+  const f = e.target.files[0];if(!f) return;
   mediaFile = f;
   const reader = new FileReader();
   reader.onload = function(ev){
@@ -738,43 +441,23 @@ document.getElementById("fileInput").onchange = function(e){
     wrap.innerHTML = "";
     if(f.type.startsWith("video")){
       const v = document.createElement("video");
-      v.className = "img-preview";
-      v.controls = true;
-      v.src = mediaPreviewUrl;
-      wrap.appendChild(v);
+      v.className = "img-preview";v.controls = true;v.src = mediaPreviewUrl;wrap.appendChild(v);
     }else{
       const img = document.createElement("img");
-      img.className = "img-preview";
-      img.src = mediaPreviewUrl;
-      wrap.appendChild(img);
+      img.className = "img-preview";img.src = mediaPreviewUrl;wrap.appendChild(img);
     }
   }
   reader.readAsDataURL(f);
 }
 
-// 提交打卡 + 翻转后延时2s展示结果（你要求的效果）
 document.getElementById("doCheckInBtn").onclick = ()=>{
   const note = document.getElementById("noteInput").value.trim();
   const engNote = document.getElementById("engCheckInput").value.trim();
-  if(!engNote){
-    alert("请填写英文打卡备注");
-    return;
-  }
+  if(!engNote){alert("请填写英文打卡备注");return;}
   const item = itemPool[Math.floor(Math.random()*itemPool.length)];
   const todayStr = new Date().toLocaleDateString();
-  const newRec = {
-    childId: selectedChildId,
-    identity: identity,
-    dateStr: todayStr,
-    note: note,
-    engNote: engNote,
-    treasureKey: item.key,
-    mediaSrc: mediaPreviewUrl
-  }
-  appData.records.push(newRec);
-  saveData(appData);
-
-  // 翻牌动画
+  const newRec = {childId: selectedChildId,identity: identity,dateStr: todayStr,note: note,engNote: engNote,treasureKey: item.key,mediaSrc: mediaPreviewUrl}
+  appData.records.push(newRec);saveData(appData);
   const flipCard = document.getElementById("flipCard");
   flipCard.classList.remove("flipped");
   document.getElementById("resultText").style.display = "none";
@@ -782,7 +465,6 @@ document.getElementById("doCheckInBtn").onclick = ()=>{
   setTimeout(()=>{
     flipCard.classList.add("flipped");
     document.getElementById("drawIcon").innerText = item.icon;
-    // 翻转完成后，再等2秒弹出文字
     setTimeout(()=>{
       document.getElementById("drawItemName").innerText = item.name;
       document.getElementById("resultText").style.display = "block";
@@ -792,14 +474,9 @@ document.getElementById("doCheckInBtn").onclick = ()=>{
   showPage(4);
 }
 
-document.getElementById("drawDoneBtn").onclick = ()=>{
-  showPage(2);
-  document.getElementById("resultText").style.display = "none";
-  document.getElementById("drawDoneBtn").style.display = "none";
-}
-
-// 初始化
+document.getElementById("drawDoneBtn").onclick = ()=>{showPage(2);document.getElementById("resultText").style.display = "none";document.getElementById("drawDoneBtn").style.display = "none";}
 showPage(0);
 </script>
 </body>
 </html>
+
