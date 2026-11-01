@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>Prek‑C｜森林探险家打卡</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:"PingFang SC",system-ui,-apple-system}
-html,body{
+*{box-sizing:border-box;margin:0;padding:0;font-family:"PingFang SC",system-ui,-apple-system;
+  touch-action: manipulation;
+}
+body{
   background:#f4f9ee;
   color:#2c422e;
-  width:100%;
-  height:100%;
-  overflow:hidden;
+  padding:0;
+  max-width:100%;
+  overflow-x:hidden;
 }
 .app{
   width:100vw;
-  height:100vh;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:flex-start;
@@ -24,29 +26,25 @@ html,body{
 .phone{
   width:100%;
   max-width:430px;
-  height:100vh;
   background:#f4f9ee;
+  min-height:100vh;
+  padding:12px;
+  margin:0 auto;
+  box-shadow:0 0 20px rgba(0,0,0,0.05);
   position:relative;
   overflow:hidden;
 }
-/* 翻页外层容器，横向滑动，固定视口高度 */
-.page-slider{
+.page-wrap{
   width:100%;
   height:100%;
-  position:relative;
-}
-.page-wrap{
   position:absolute;
   top:0;
   left:0;
-  width:100%;
-  height:100%;
-  padding:12px;
-  padding-bottom:24px;
   transition: transform 0.4s ease-in-out;
   backface-visibility:hidden;
-  overflow-y:auto; /* 内容长就可以下拉滚动 */
-  overscroll-behavior:contain;
+  padding:12px;
+  overflow-y:auto; /* ✅ 修复：长页面可以上下滑动 */
+  -webkit-overflow-scrolling: touch;
 }
 .page-next{
   transform: translateX(105%);
@@ -58,7 +56,7 @@ html,body{
   transform: translateX(0);
 }
 h1{font-size:20px;margin-bottom:6px;color:#375739;text-align:center}
-.sub{color:#547056;margin-bottom:12px;font-size:14px;text-align:center}
+.sub{color:#547056;margin-bottom:16px;font-size:14px;text-align:center}
 .card{
   background:#fff;
   border-radius:12px;
@@ -111,8 +109,8 @@ textarea{
   min-height:75px;
   margin:8px 0;
 }
-.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
-video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
+.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:contain;}
+video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:contain;}
 .tip-text{font-size:12px;color:#666;margin:4px 0;}
 .treasure-map{
   border:2px dashed #b8d2ba;
@@ -136,7 +134,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
   background:#f7f7f7;
 }
 .treasure-cell.active{background:#e6f2e7;border-color:#548c57}
-
+.hide{display:none !important;}
 /* 翻牌卡片 */
 .flip-wrap{
   perspective: 600px;
@@ -176,17 +174,17 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
   transform: rotateY(180deg);
 }
 
-/* 封面 */
+/* 身份封面 */
 .cover{
   width:100%;
-  height:100%;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
+  padding:20px 12px;
 }
 .cover-card{
   width:100%;
-  height:calc(100% - 10px);
   border-radius:20px;
   overflow:hidden;
   background:
@@ -195,9 +193,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
     linear-gradient(160deg, #6fae6a 0%, #4b8c59 45%, #2f6b45 100%);
   box-shadow:0 18px 40px rgba(44,82,46,0.35);
   position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
 }
 .cover-forest{
   position:absolute;
@@ -212,10 +207,9 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
 .cover-content{
   position:relative;
   z-index:2;
-  padding:18px 18px 170px;
+  padding:40px 18px 180px;
   text-align:center;
   color:#fff;
-  width:100%;
 }
 .cover-logo{
   display:inline-flex;
@@ -230,7 +224,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
   margin-bottom:14px;
 }
 .cover-title{
-  font-size:28px;
+  font-size:30px;
   font-weight:800;
   line-height:1.15;
   margin-bottom:10px;
@@ -295,14 +289,13 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
   padding:4px 0;
   font-size:14px;
 }
-.hide{display:none !important;}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="phone">
-    <div class="page-slider" id="app">
-      <!--P0 封面-->
+    <div id="app">
+      <!--P0 身份封面页-->
       <div id="page0" class="page-wrap page-active">
         <div class="cover">
           <div class="cover-card">
@@ -326,8 +319,10 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
         </div>
       </div>
 
-      <!--P1 选择小探险家（已删掉顶部标题）-->
+      <!--P1 选择小朋友页-->
       <div id="page1" class="page-wrap page-next">
+        <h1>🌲 Prek‑C 森林探险家</h1>
+        <div class="sub">身份：<span id="showIdentity"></span>｜选择小探险家</div>
         <div class="card" id="teacherStatCard">
           <h3>📊今日打卡统计</h3>
           <div id="statText"></div>
@@ -345,7 +340,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
         <button class="btn back-btn" id="back0Btn">← 返回选择身份</button>
       </div>
 
-      <!--P2 功能菜单-->
+      <!--P2 功能选择页（打卡 / 藏宝记录）-->
       <div id="page2" class="page-wrap page-next">
         <h1>✨探险菜单</h1>
         <div class="sub">小探险家：<span id="currChildName2"></span></div>
@@ -424,6 +419,7 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0}
         </div>
         <button class="btn back-btn" id="backFromRecordBtn">← 返回探险菜单</button>
       </div>
+
     </div>
   </div>
 </div>
@@ -479,6 +475,7 @@ const parentSuggestList = [
 ];
 
 const STORAGE_KEY = "prekc_forest_box_v6";
+let isDrawing = false; // ✅ 防重复提交锁
 
 function initBox(){
   let raw = localStorage.getItem(STORAGE_KEY);
@@ -502,7 +499,18 @@ function getTodaySuggestion(){
 }
 function getTodayStr(){
   const d = new Date();
-  return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return `${d.getFullYear()}/${m}/${dd}`
+}
+function formatTime(){
+  const d = new Date();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  const h = String(d.getHours()).padStart(2,'0');
+  const mi = String(d.getMinutes()).padStart(2,'0');
+  const s = String(d.getSeconds()).padStart(2,'0');
+  return `${d.getFullYear()}/${m}/${dd} ${h}:${mi}:${s}`
 }
 function renderTeacherStat(){
   const box = initBox();
@@ -542,7 +550,6 @@ function goPage(target){
     p.classList.add("page-next");
   })
   target.classList.add("page-active");
-  target.scrollTop = 0; // 切页自动滚到顶部
 }
 
 const btnParent = document.getElementById("btnParent");
@@ -738,7 +745,9 @@ goRecordBtn.onclick = function(){
   goPage(page6);
 };
 doCheckInBtn.onclick = function(){
+  if(isDrawing) return; // ✅ 防止重复点击提交
   if(!selectedChild || !currentIdentity) return;
+  isDrawing = true;
   let box = initBox();
   const drawRes = randomDraw();
   box.totalCheckIns += 1;
@@ -751,7 +760,7 @@ doCheckInBtn.onclick = function(){
     note:noteInput.value.trim(),
     media:selectedMediaBase64,
     mediaType:selectedMediaType,
-    time:new Date().toLocaleString(),
+    time:formatTime(),
     suggest:currentIdentity==="parent" ? getTodaySuggestion() : ""
   });
   saveBox(box);
@@ -768,6 +777,7 @@ doCheckInBtn.onclick = function(){
     setTimeout(()=>{
       resultText.style.display="block";
       drawDoneBtn.style.display="block";
+      isDrawing = false; // ✅ 解锁
     },400);
   },2000);
 };
