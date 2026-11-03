@@ -770,9 +770,9 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 
 <p>📷媒体记录（可选：拍照 / 录视频 / 相册选取）<span class="en-small">Media(optional): photo/video/gallery</span></p>
 
-<div class="tip-text">建议短视频15秒以内，过大视频会存储失败｜Suggest video within 15s, big video may fail to save</div>
+<div class="tip-text">点一下可拍照，也可以从相册选照片/视频｜图片会自动压缩，视频建议15秒以内</div>
 
-<input type="file" id="fileInput" accept="image/*,video/*" capture="camera">
+<input type="file" id="fileInput" accept="image/*,video/*">
 
 <div id="mediaPreviewWrap"></div>
 
@@ -873,7 +873,6 @@ video.img-preview{max-width:100%;border-radius:8px;margin:8px 0;object-fit:conta
 </div>
 
 </div>
-
 <script>
 
 // 孩子名单：中文名+英文名
@@ -941,7 +940,6 @@ const itemPool = [
 {key:"grass",name:"小草",en:"Grass",icon:"🌿"}
 
 ];
-
 // 中英双语运动建议
 
 const parentSuggestList = [
@@ -1007,7 +1005,6 @@ const parentSuggestList = [
 {zh:"（运动小建议：探险总结会：回顾30天运动，孩子说一说最喜欢的森林游戏。）",en:"(Activity:Adventure review:Review 30‑day sports,kid talk about favorite forest game.)"}
 
 ];
-
 // 新增：英文句子池
 
 const englishSentencePool = [
@@ -1083,7 +1080,6 @@ function getTodayEnglishItem(){
   return englishSentencePool[idx];
 
 }
-
 // ==================== 英语句子播放（修复跨设备无声） ====================
 // 1) 能力检测：部分安卓浏览器 / 微信内置内核没有 speechSynthesis，直接调用会报错或无声
 const TTS_SUPPORTED = ("speechSynthesis" in window) && (typeof SpeechSynthesisUtterance !== "undefined");
@@ -1114,7 +1110,6 @@ function pickEnVoice(){
     || voices.find(function(v){ return /^en/i.test(v.lang || ""); })
     || voices[0];
 }
-
 // 2) 可选的最稳方案：把 30 个句子提前生成 mp3 并填入下面的键（键 = 当日-1，与 englishSentencePool 顺序一致）。
 // 例：LOCAL_ENG_AUDIO[0] = "https://你的域名/audio/eng01.mp3"；
 // 留空则自动走"系统语音 → 在线TTS"两级兜底。
@@ -1125,7 +1120,8 @@ function buildTtsUrl(text){
   return "https://fanyi.baidu.com/gettts?lan=en&text=" + encodeURIComponent(text) + "&spd=3&source=web";
 }
 
-// 4) 静音 WAV（0.01秒）用于 iOS/微信"手势内解锁"音频会话
+
+// 4) 静音 WAV（0.01秒，约280字符）用于 iOS/微信"手势内解锁"音频会话
 const SILENT_WAV = "data:audio/wav;base64,UklGRsQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
 let engAudioEl = null;
@@ -1250,7 +1246,20 @@ function initBox(){
 
 }
 
-function saveBox(box){localStorage.setItem(STORAGE_KEY,JSON.stringify(box));}
+function saveBox(box){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(box));
+  }catch(e){
+    // 配额超限：通常是视频/照片太多导致，提示用户并降级（去掉视频再试）
+    if(e.name === "QuotaExceededError" || e.code === 22){
+      alert("打卡记录太多啦，手机存储空间不够了。视频会自动去掉，只保存文字记录～");
+      // 降级：把所有video类型的media置空，只保留文字和图片
+      box.records.forEach(r => { if(r.mediaType === "video"){ r.media = null; r.mediaType = null; } });
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(box)); }
+      catch(e2){ alert("还是存不下，请联系老师清理旧记录哦"); }
+    }
+  }
+}
 
 function getBoxStage(total){
 
@@ -1484,29 +1493,56 @@ fileInput.onchange = function(e){
 
   if(!file){selectedMediaBase64=null;selectedMediaType=null;mediaPreviewWrap.innerHTML="";return;}
 
-  const reader = new FileReader();
+  // 文件大小限制：图片 3MB，视频 10MB
+  const MAX_IMG = 3 * 1024 * 1024;
+  const MAX_VID = 10 * 1024 * 1024;
+  const isVideo = file.type.startsWith("video/");
 
-  reader.onload = function(ev){
+  if(isVideo && file.size > MAX_VID){
+    alert("视频太大啦（超过10MB），请录短一点的视频（15秒以内），或直接打字记录即可");
+    fileInput.value = "";
+    return;
+  }
+  if(!isVideo && file.size > MAX_IMG){
+    alert("照片太大啦（超过3MB），系统会自动帮你压缩一下");
+  }
 
-    selectedMediaBase64 = ev.target.result;
-
-    if(file.type.startsWith("video/")){
-
+  if(isVideo){
+    // 视频直接读取为base64（浏览器原生视频无法压缩）
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      selectedMediaBase64 = ev.target.result;
       selectedMediaType = "video";
-
       mediaPreviewWrap.innerHTML = `<video class="img-preview" controls src="${selectedMediaBase64}"></video>`;
-
-    }else{
-
+    };
+    reader.readAsDataURL(file);
+  }else{
+    // 图片用canvas压缩：最长边800px，JPEG质量0.7，大幅减小base64体积
+    const img = new Image();
+    const objUrl = URL.createObjectURL(file);
+    img.onload = function(){
+      URL.revokeObjectURL(objUrl);
+      const MAX_SIDE = 800;
+      let w = img.width, h = img.height;
+      if(w > MAX_SIDE || h > MAX_SIDE){
+        if(w > h){ h = Math.round(h * MAX_SIDE / w); w = MAX_SIDE; }
+        else { w = Math.round(w * MAX_SIDE / h); h = MAX_SIDE; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
+      selectedMediaBase64 = canvas.toDataURL("image/jpeg", 0.7);
       selectedMediaType = "image";
-
       mediaPreviewWrap.innerHTML = `<img class="img-preview" src="${selectedMediaBase64}">`;
-
-    }
-
-  };
-
-  reader.readAsDataURL(file);
+    };
+    img.onerror = function(){
+      URL.revokeObjectURL(objUrl);
+      alert("图片读取失败，请换一张试试");
+      fileInput.value = "";
+    };
+    img.src = objUrl;
+  }
 
 };
 
